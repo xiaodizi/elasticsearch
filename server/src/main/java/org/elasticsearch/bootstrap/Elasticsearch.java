@@ -50,20 +50,23 @@ import java.util.concurrent.TimeUnit;
 import static org.elasticsearch.bootstrap.BootstrapSettings.SECURITY_FILTER_BAD_DEFAULTS_SETTING;
 
 /**
- * This class starts elasticsearch.
+ * elasticsearch 服务开启从这个类开始
  */
 class Elasticsearch {
 
     /**
-     * Main entry point for starting elasticsearch.
+     * elasticsearch 服务启动的入口方法
      */
     public static void main(final String[] args) {
 
+        //初始化准备第一步
         Bootstrap bootstrap = initPhase1();
         assert bootstrap != null;
 
         try {
+            //初始化准备第二步
             initPhase2(bootstrap);
+            //初始化准备第三步
             initPhase3(bootstrap);
         } catch (NodeValidationException e) {
             bootstrap.exitWithNodeValidationException(e);
