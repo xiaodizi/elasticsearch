@@ -1,30 +1,30 @@
 = Elasticsearch
 
-Elasticsearch 是一个基于 RESTful 分布式搜索和分析引擎https://www.elastic.co/products[Elastic Stack]，你可以使用
-Elasticsearch用于存储、搜索和管理数据:
+Elasticsearch is the distributed, RESTful search and analytics engine at the
+heart of the https://www.elastic.co/products[Elastic Stack]. You can use
+Elasticsearch to store, search, and manage data for:
 
 * Logs
-* 指标
-* 搜索后端
-* 程序监控
-* 终端安全
+* Metrics
+* A search backend
+* Application monitoring
+* Endpoint security
 
+\... and more!
+
+To learn more about Elasticsearch's features and capabilities, see our
+https://www.elastic.co/products/elasticsearch[product page].
 
 [[get-started]]
 == Get started
 
-这个项目，本来就是为了学习做的记录。开始记录写中文注释。慢慢写，慢慢更新，不着急......
+The simplest way to set up Elasticsearch is to create a managed deployment with
+https://www.elastic.co/cloud/as-a-service[Elasticsearch Service on Elastic
+Cloud].
 
-=== 本地IDEA 环境 Debug 源码
-
-先把代码 clone 下来，导入到 IDEA 里。
-
-==== 前提注意事项：
-. jdk 版本，现在这个可以参考官网，不过我 Fork 这个项目测试过，jdk 17是没有问题的
-。 https://www.elastic.co/cn/support/matrix#matrix_jvm[官网参考链接]
-
-
-
+If you prefer to install and manage Elasticsearch yourself, you can download
+the latest version from
+https://www.elastic.co/downloads/elasticsearch[elastic.co/downloads/elasticsearch].
 
 === Run Elasticsearch locally
 
