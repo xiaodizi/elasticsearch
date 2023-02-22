@@ -1,17 +1,27 @@
 Contributing to elasticsearch
 =============================
 
+为elasticsearch做出贡献
+
 Elasticsearch is a free and open project and we love to receive contributions from our community — you! There are many ways to contribute, from writing tutorials or blog posts, improving the documentation, submitting bug reports and feature requests or writing code which can be incorporated into Elasticsearch itself.
+
+Elasticsearch是一个免费和开放的项目，我们喜欢收到来自我们社区的贡献——你!有很多方法可以贡献，从编写教程或博客文章，改进文档，提交错误报告和功能请求，或者编写可以合并到Elasticsearch本身的代码。
 
 If you want to be rewarded for your contributions, sign up for the [Elastic Contributor Program](https://www.elastic.co/community/contributor). Each time you
 make a valid contribution, you’ll earn points that increase your chances of winning prizes and being recognized as a top contributor.
+
+如果你想为你的贡献获得奖励，请注册[弹性贡献者计划](https://www.elastic.co/community/contributor)。每次你做出有效的贡献，您将获得积分，增加您获奖的机会，并被公认为顶级贡献者。
 
 Bug reports
 -----------
 
 If you think you have found a bug in Elasticsearch, first make sure that you are testing against the [latest version of Elasticsearch](https://www.elastic.co/downloads/elasticsearch) - your issue may already have been fixed. If not, search our [issues list](https://github.com/elastic/elasticsearch/issues) on GitHub in case a similar issue has already been opened.
 
+如果您认为您在Elasticsearch中发现了一个错误，首先确保您正在针对[最新版本的Elasticsearch](https://www.elastic.co/downloads/elasticsearch)进行测试-您的问题可能已经解决了。如果没有，在GitHub上搜索我们的[问题列表](https://github.com/elastic/elasticsearch/issues)，以防类似的问题已经打开。
+
 It is very helpful if you can prepare a reproduction of the bug. In other words, provide a small test case which we can run to confirm your bug. It makes it easier to find the problem and to fix it. Test cases should be provided as `curl` commands which we can copy and paste into a terminal to run it locally, for example:
+
+如果你能准备一个bug的复制品，那将是非常有帮助的。换句话说，提供一个小的测试用例，我们可以运行它来确认您的错误。它使发现问题和解决问题变得更容易。测试用例应该以' curl '命令的形式提供，我们可以复制并粘贴到终端中在本地运行，例如:
 
 ```sh
 # delete the index
@@ -28,14 +38,24 @@ curl ....
 
 Provide as much information as you can. You may think that the problem lies with your query, when actually it depends on how your data is indexed. The easier it is for us to recreate your problem, the faster it is likely to be fixed.
 
+提供尽可能多的信息。您可能认为问题出在查询上，但实际上问题出在数据索引的方式上。我们越容易重现您的问题，修复它的速度就可能越快。
+
 Feature requests
 ----------------
+
+特殊请求
 
 If you find yourself wishing for a feature that doesn't exist in Elasticsearch, you are probably not alone. There are bound to be others out there with similar needs. Many of the features that Elasticsearch has today have been added because our users saw the need.
 Open an issue on our [issues list](https://github.com/elastic/elasticsearch/issues) on GitHub which describes the feature you would like to see, why you need it, and how it should work.
 
+如果您发现自己希望获得Elasticsearch中不存在的特性，那么您可能并不孤单。肯定会有其他人有类似的需求。Elasticsearch今天的许多功能都是由于我们的用户看到了需求而添加的。
+
+在GitHub上的[问题列表](https://github.com/elastic/elasticsearch/issues)上打开一个问题，该问题描述了您想要看到的功能，为什么需要它，以及它应该如何工作。
+
 Contributing code and documentation changes
 -------------------------------------------
+
+贡献代码和文档更改
 
 If you would like to contribute a new feature or a bug fix to Elasticsearch,
 please discuss your idea first on the GitHub issue. If there is no GitHub issue
@@ -45,18 +65,30 @@ starting the implementation. There are often a number of ways to fix a problem
 and it is important to find the right approach before spending time on a PR
 that cannot be merged.
 
+如果您想为Elasticsearch贡献一个新功能或修复一个错误，请先在GitHub上讨论你的想法。如果没有GitHub问题为了你的想法，请打开一个。也许有人已经在做了或者说有一些特殊的复杂性是你之前应该知道的开始实现。通常有很多方法来解决一个问题在花时间做PR之前找到正确的方法是很重要的不能合并。
+
 We add the `help wanted` label to existing GitHub issues for which community
 contributions are particularly welcome, and we use the `good first issue` label
 to mark issues that we think will be suitable for new contributors.
 
+我们将“需要帮助”标签添加到现有的GitHub问题中特别欢迎投稿，我们使用“良好的第一期”标签标记我们认为适合新贡献者的问题。
+
 The process for contributing to any of the [Elastic repositories](https://github.com/elastic/) is similar. Details for individual projects can be found below.
 
+贡献给任何[弹性存储库](https://github.com/elastic/)的过程是类似的。个别项目的详细信息可以在下面找到。
+
 ### Fork and clone the repository
+
+Fork和克隆存储库
 
 You will need to fork the main Elasticsearch code or documentation repository and clone it to your local machine. See
 [github help page](https://help.github.com/articles/fork-a-repo) for help.
 
+您需要派生主Elasticsearch代码或文档存储库，并将其克隆到您的本地机器上。看到 [github帮助页面 ](https://help.github.com/articles/fork-a-repo)寻求帮助。
+
 Further instructions for specific projects are given below.
+
+具体项目的进一步说明如下。
 
 ### Tips for code changes
 Following these tips prior to raising a pull request will speed up the review
@@ -194,9 +226,6 @@ instructions are below in case you need them.
    4. Click "Browse", and navigate to the file `build-conventions/formatterConfig.xml`
    5. **IMPORTANT** - make sure "Optimize Imports" is **NOT** selected.
    6. Click "OK"
-   7. Optional: If you like to format code changes on save automatically, open
-      **Preferences > Tools > Actions on Save** and check "Reformat Code", making sure to
-      configure Java files.
 
 Alternative manual steps for IntelliJ.
 
@@ -869,17 +898,6 @@ refactorings or otherwise "tidy up" certain aspects of the code. We think the
 benefits of this kind of change are very small, and in our experience it is not
 worth investing the substantial effort needed to review them. This especially
 includes changes suggested by tools.
-
-We normally immediately reject PRs which target platforms or system
-configurations that are not in the [official support
-matrix](https://www.elastic.co/support/matrix). We choose to support particular
-platforms with care because we must work to ensure that every Elasticsearch
-release works completely on every platform, and we must spend time
-investigating test failures and performance regressions there too. We cannot
-determine whether PRs which target unsupported platforms or configurations meet
-our quality standards, nor can we guarantee that the change they introduce will
-continue to work in future releases. We do not want Elasticsearch to suddenly
-stop working on a particular platform after an upgrade.
 
 We sometimes reject contributions due to the low quality of the submission
 since low-quality submissions tend to take unreasonable effort to review

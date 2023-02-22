@@ -1,17 +1,21 @@
 = Elasticsearch
 
-Elasticsearch 是一个基于 RESTful 分布式搜索和分析引擎https://www.elastic.co/products[Elastic Stack]，你可以使用
-Elasticsearch用于存储、搜索和管理数据:
+因为考取了 Elastic 的认证工程师，所以还是想继续深入的学习一下。
+别的方法也不会，就用了一个很笨的方法，看文档，看源码。
+所以就Fork 了一个项目，慢慢更新一些中文的源码和一些文档吧！
+也失业了，找不到工作，也能当成个事情做。也不知道能坚持多久，写写看！
 
-* Logs
-* 指标
-* 搜索后端
-* 程序监控
-* 终端安全
+习惯了用一些笔记软件写记录，对写作工具也有点陌生，看来得慢慢熟悉了。
+
+如果哪里写错了，或者不好欢迎发邮件。
+
+邮箱：305297641@qq.com
+
+讨厌，这asciidoc的文档不会放图片，我的琢磨琢磨。
 
 
-[[get-started]]
-== Get started
+[[开始]]
+== 开始
 
 这个项目，本来就是为了学习做的记录。开始记录写中文注释。慢慢写，慢慢更新，不着急......
 
@@ -22,216 +26,73 @@ Elasticsearch用于存储、搜索和管理数据:
 ==== 前提注意事项：
 . jdk 版本，现在这个可以参考官网，不过我 Fork 这个项目测试过，jdk 17是没有问题的
 。 https://www.elastic.co/cn/support/matrix#matrix_jvm[官网参考链接]
+. 注意 IDEA 里边 Project Structure 都要设置好jdk。
 
-
-
-
-=== Run Elasticsearch locally
-
-////
-IMPORTANT: This content is replicated in the Elasticsearch guide.
-If you make changes, you must also update setup/set-up-local-dev-deployment.asciidoc.
-////
-
-To try out Elasticsearch on your own machine, we recommend using Docker
-and running both Elasticsearch and Kibana.
-Docker images are available from the https://www.docker.elastic.co[Elastic Docker registry].
-
-NOTE: Starting in Elasticsearch 8.0, security is enabled by default.
-The first time you start Elasticsearch, TLS encryption is configured automatically,
-a password is generated for the `elastic` user,
-and a Kibana enrollment token is created so you can connect Kibana to your secured cluster.
-
-For other installation options, see the
-https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html[Elasticsearch installation documentation].
-
-**Start Elasticsearch**
-
-. Install and start https://www.docker.com/products/docker-desktop[Docker
-Desktop]. Go to **Preferences > Resources > Advanced** and set Memory to at least 4GB.
-
-. Start an Elasticsearch container:
+==== 关于IDEA里启动
+. 我用谷歌或者百度搜索了好多文章和帖子，包括国外的，很多都说要配置参数，后再启动什么什么的，不过我倒是觉得参数太多了，就没必要再考虑配置参数的事情了。看看官方的推荐就好了，或者官方论坛去搜搜帖子看看。
+. 项目本身是用gradle管理和运行，其实导入到IDEA就已经开始同步和执行了。前提IDEA配置好gradle。
+. 运行的命令：
 +
 ----
-docker network create elastic
-docker pull docker.elastic.co/elasticsearch/elasticsearch:{version} <1>
-docker run --name elasticsearch --net elastic -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -t docker.elastic.co/elasticsearch/elasticsearch:{version}
+gradle run
 ----
-<1> Replace {version} with the version of Elasticsearch you want to run.
-+
-When you start Elasticsearch for the first time, the generated `elastic` user password and
-Kibana enrollment token are output to the terminal.
-+
-NOTE: You might need to scroll back a bit in the terminal to view the password
-and enrollment token.
-
-. Copy the generated password and enrollment token and save them in a secure
-location. These values are shown only when you start Elasticsearch for the first time.
-You'll use these to enroll Kibana with your Elasticsearch cluster and log in.
-
-**Start Kibana**
-
-Kibana enables you to easily send requests to Elasticsearch and analyze, visualize, and manage data interactively.
-
-. In a new terminal session, start Kibana and connect it to your Elasticsearch container:
+如果是在IDEA里运行，这个命令就可以跑起来。
+. 用console去运行：就进入项目跟目录。
 +
 ----
-docker pull docker.elastic.co/kibana/kibana:{version} <1>
-docker run --name kibana --net elastic -p 5601:5601 docker.elastic.co/kibana/kibana:{version}
+./gradlew run
 ----
-<1> Replace {version} with the version of Kibana you want to run.
+
+. 运行执行完了，正常会在IDEA里边自动添加 Remote JVM Debug 的，配置基本不用改，启动这个话，会在本地监听5007端口，这是默认配置。监听启动之后再执行gradle run，就可以进行Debug了。
+
+==== 程序启动入口
+. 程序启动实在server 模块下边的 bootstrap 文件夹里的 Elasticsearch 这个类的 main 方法。可以尝试 Debug 一下。
+. 因为打包好之后，都是执行shell脚本，这是在distribution 模块下的 tools 模块，里边再找 cli-launcher 模块里的 CliToolLauncher 类，下载个包，看看shell也能定位到。
+
+
+==== 注意事项
+有两个命令不建议用。
+----
+gradle build
+gradle assemble
+----
+这俩就不多说，一个打包，一个叫构建。会把所有功能全部，build 一遍。意义不大，而且现在源码会有docker的部分，会一起打包。这东西我觉得我也不需要，有些网上文章，建议把docker 的部分依赖注释点，我试了一下是可以的，但是没啥意义。
+
+==== 打包源码
+. 如果想打包，可以尝试：
 +
-When you start Kibana, a unique URL is output to your terminal.
-
-. To access Kibana, open the generated URL in your browser.
-
-  .. Paste the enrollment token that you copied when starting
-  Elasticsearch and click the button to connect your Kibana instance with Elasticsearch.
-
-  .. Log in to Kibana as the `elastic` user with the password that was generated
-  when you started Elasticsearch.
-
-**Send requests to Elasticsearch**
-
-You send data and other requests to Elasticsearch through REST APIs.
-You can interact with Elasticsearch using any client that sends HTTP requests,
-such as the https://www.elastic.co/guide/en/elasticsearch/client/index.html[Elasticsearch
-language clients] and https://curl.se[curl].
-Kibana's developer console provides an easy way to experiment and test requests.
-To access the console, go to **Management > Dev Tools**.
-
-**Add data**
-
-You index data into Elasticsearch by sending JSON objects (documents) through the REST APIs.
-Whether you have structured or unstructured text, numerical data, or geospatial data,
-Elasticsearch efficiently stores and indexes it in a way that supports fast searches.
-
-For timestamped data such as logs and metrics, you typically add documents to a
-data stream made up of multiple auto-generated backing indices.
-
-To add a single document to an index, submit an HTTP post request that targets the index.
-
-----
-POST /customer/_doc/1
-{
-  "firstname": "Jennifer",
-  "lastname": "Walters"
-}
-----
-
-This request automatically creates the `customer` index if it doesn't exist,
-adds a new document that has an ID of 1, and
-stores and indexes the `firstname` and `lastname` fields.
-
-The new document is available immediately from any node in the cluster.
-You can retrieve it with a GET request that specifies its document ID:
-
-----
-GET /customer/_doc/1
-----
-
-To add multiple documents in one request, use the `_bulk` API.
-Bulk data must be newline-delimited JSON (NDJSON).
-Each line must end in a newline character (`\n`), including the last line.
-
-----
-PUT customer/_bulk
-{ "create": { } }
-{ "firstname": "Monica","lastname":"Rambeau"}
-{ "create": { } }
-{ "firstname": "Carol","lastname":"Danvers"}
-{ "create": { } }
-{ "firstname": "Wanda","lastname":"Maximoff"}
-{ "create": { } }
-{ "firstname": "Jennifer","lastname":"Takeda"}
-----
-
-**Search**
-
-Indexed documents are available for search in near real-time.
-The following search matches all customers with a first name of _Jennifer_
-in the `customer` index.
-
-----
-GET customer/_search
-{
-  "query" : {
-    "match" : { "firstname": "Jennifer" }
-  }
-}
-----
-
-**Explore**
-
-You can use Discover in Kibana to interactively search and filter your data.
-From there, you can start creating visualizations and building and sharing dashboards.
-
-To get started, create a _data view_ that connects to one or more Elasticsearch indices,
-data streams, or index aliases.
-
-. Go to **Management > Stack Management > Kibana > Data Views**.
-. Select **Create data view**.
-. Enter a name for the data view and a pattern that matches one or more indices,
-such as _customer_.
-. Select **Save data view to Kibana**.
-
-To start exploring, go to **Analytics > Discover**.
-
-[[upgrade]]
-== Upgrade
-
-To upgrade from an earlier version of Elasticsearch, see the
-https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-upgrade.html[Elasticsearch upgrade
-documentation].
-
-[[build-source]]
-== Build from source
-
-Elasticsearch uses https://gradle.org[Gradle] for its build system.
-
-To build a distribution for your local OS and print its output location upon
-completion, run:
 ----
 ./gradlew localDistro
 ----
+本地系统是啥系统，就会打包啥样的系统。
 
-To build a distribution for another platform, run the related command:
+. 如果想打包指定版本，可以尝试：
++
 ----
 ./gradlew :distribution:archives:linux-tar:assemble
 ./gradlew :distribution:archives:darwin-tar:assemble
 ./gradlew :distribution:archives:windows-zip:assemble
 ----
-
-To build distributions for all supported platforms, run:
+. 反正别尝试：
 ----
 ./gradlew assemble
 ----
+一是会失败，二就是gradle 吃CPU 挺狠的，配置低的电脑估计一下就干死。编译的时候内存应该会搞到5G以上。我电脑64G内存，基本没啥压力。如果电脑配置不好，低于2G 不建议尝试了。
 
-Distributions are output to `distribution/archives`.
+过几天看看再写个gradle优化的配置。。。
 
-To run the test suite, see xref:TESTING.asciidoc[TESTING].
+==== 原文翻译
+原文的官方文档我也大概看了，有些翻译我保留了.
 
-[[docs]]
-== Documentation
+xref:TESTING.asciidoc[TESTING] 是关于Debug 测试的。
 
-For the complete Elasticsearch documentation visit
-https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html[elastic.co].
+xref:CONTRIBUTING.md[CONTRIBUTING] 是关于如何打包的。
 
-For information about our documentation processes, see the
-xref:docs/README.asciidoc[docs README].
+[[目录]]
+== 目录
+先想想写啥.....
 
-[[contribute]]
-== Contribute
 
-For contribution guidelines, see xref:CONTRIBUTING.md[CONTRIBUTING].
 
-[[questions]]
-== Questions? Problems? Suggestions?
 
-* To report a bug or request a feature, create a
-https://github.com/elastic/elasticsearch/issues/new/choose[GitHub Issue]. Please
-ensure someone else hasn't created an issue for the same topic.
 
-* Need help using Elasticsearch? Reach out on the
-https://discuss.elastic.co[Elastic Forum] or https://ela.st/slack[Slack]. A
-fellow community member or Elastic engineer will be happy to help you out.
