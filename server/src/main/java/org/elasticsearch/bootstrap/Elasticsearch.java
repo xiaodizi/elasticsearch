@@ -75,29 +75,33 @@ class Elasticsearch {
         }
     }
 
+    // 和 getStdout 方法一样
     @SuppressForbidden(reason = "grab stderr for communication with server-cli")
     private static PrintStream getStderr() {
         return System.err;
     }
 
-    // TODO: remove this, just for debugging
+    // 这东西是为了Debug 用的。放到后边再看，估计得返回去看 CliToolLauncher 类的内容
     @SuppressForbidden(reason = "grab stdout for communication with server-cli")
     private static PrintStream getStdout() {
         return System.out;
     }
 
     /**
-     * First phase of process initialization.
+     * 服务初始化的第一阶段
      *
-     * <p> Phase 1 consists of some static initialization, reading args from the CLI process, and
-     * finally initializing logging. As little as possible should be done in this phase because
-     * initializing logging is the last step.
+     * 阶段1包括一些静态初始化、从CLI进程读取参数和
+     * 最终初始化日志。在这个阶段应该做的尽可能少，因为
+     * 初始化日志是最后一步
      */
     private static Bootstrap initPhase1() {
+        // 获取与server-cli通信的标准输出
         final PrintStream out = getStdout();
+        // 获取与server-cli通信的标准错误
         final PrintStream err = getStderr();
         final ServerArgs args;
         try {
+             // 初始化安全配置，其实就是加载了两个系统配置
             initSecurityProperties();
 
             /*
@@ -389,13 +393,22 @@ class Elasticsearch {
         Files.writeString(pidFile, Long.toString(ProcessHandle.current().pid()));
     }
 
+    /**
+     * 看了一下官方，这俩是jdk 安全管理器的配置，主要是做DNS 缓存的，默认是缓存10秒，这个方法负写了10秒的默认值为60秒。并缓存10秒的负查找。
+     * 这个负查找，没想明白是什么意思？
+     * 这两个 jdk 的安全管理器参数，可以通过 jvm 的参数进行修改。
+     * networkaddress.cache.ttl:
+     * networkaddress.cache.negative.ttl:
+     */
     private static void initSecurityProperties() {
         for (final String property : new String[] { "networkaddress.cache.ttl", "networkaddress.cache.negative.ttl" }) {
+            // 其实我看了一下也不算复写，是写了新的，加了es.这个前缀
             final String overrideProperty = "es." + property;
+            // 感觉是 JDK 里边会有带es.前缀的配置，而且配置的是60S，这句就是把60S取出来了。断点看了一下确实是60S
             final String overrideValue = System.getProperty(overrideProperty);
             if (overrideValue != null) {
                 try {
-                    // round-trip the property to an integer and back to a string to ensure that it parses properly
+                    // 这里是覆盖了旧的 jdk 的 配置
                     Security.setProperty(property, Integer.toString(Integer.valueOf(overrideValue)));
                 } catch (final NumberFormatException e) {
                     throw new IllegalArgumentException("failed to parse [" + overrideProperty + "] with value [" + overrideValue + "]", e);

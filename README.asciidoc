@@ -52,7 +52,17 @@ gradle run
 ./gradlew run
 ----
 
-. 运行执行完了，正常会在IDEA里边自动添加 Remote JVM Debug 的，配置基本不用改，启动这个话，会在本地监听5007端口，这是默认配置。监听启动之后再执行gradle run，就可以进行Debug了。
+. 运行执行完了，正常会在IDEA里边自动添加 Remote JVM Debug 的，配置基本不用改，启动这个话，会在本地监听5007端口，这是默认配置。监听启动之后再执行,
++
+----
+gradle run --debug-jvm
+----
+如果console 运行就是
++
+----
+./gradlew run --debug-jvm
+----
+就可以进行Debug了。
 
 ==== 程序启动入口
 . 程序启动实在server 模块下边的 bootstrap 文件夹里的 Elasticsearch 这个类的 main 方法。可以尝试 Debug 一下。
@@ -93,7 +103,7 @@ gradle assemble
 ==== 原文翻译
 原文的官方文档我也大概看了，有些翻译我保留了.
 
-xref:TESTING.asciidoc[TESTING] 是关于Debug 测试的。
+xref:TESTING.md[TESTING] 是关于Debug 测试的。
 
 xref:CONTRIBUTING.md[CONTRIBUTING] 是关于如何打包的。
 
