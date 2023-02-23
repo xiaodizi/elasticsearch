@@ -1,0 +1,16 @@
+= 网络配置
+
+Elasticsearch集群内每个节点都有两个不同的端口，http端口是给客户端使用的主要是用发送REST API 请求。另外一个就是transport端口，用来集群内各个节点之间互相通信。
+
+官方推荐的配置是, `http.port` 和 `transport.port` ,配置比较简单，设置上就可以。
+
+官方还推荐了另外一个 `network.port` 是为了简化配置，我倒是觉得这个加的有点没意义，上边两个其实挺好，Elasticsearch的集群配置已经很简单了。
+
+涉及到集群配置的还有另外一个 `network.host` ，这个配置如果添加的情况，默认是绑定到 `localhost` 上的。
+
+
+
+
+
+
+

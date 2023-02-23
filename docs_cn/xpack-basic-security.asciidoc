@@ -1,0 +1,63 @@
+[[关于xpack基本安全配置]]
+== 关于xpack基本安全配置
+最近有个人问了我关于xpack安全的配置问题，就大概交流了一下。
+这东西，以前是收费的项目，如果7.12以下版本的老板，需要自行验证了，我尝试的最低版本就是7.12了。
+
+而且 8.6 之后，官方说这个会自动生成xpack安全验证的配置，我在CentOS 7里边尝试8.6 不知道为啥并没有默认启动，但是 macOS 里边，8.6 确实自己就启动了。有相关的配置，而且我给手工修改配置才关闭的。
+
+=== 怎么配置?
+这个官方文档其实给的挺清楚的：
+
+. 使用集群证书生成工具，生成CA 文件
++
+----
+./bin/elasticsearch-certutil ca
+----
+
+. 用CA文件再生成证书文件
++
+----
+./bin/elasticsearch-certutil cert --ca elastic-stack-ca.p12
+----
+
+. config目录里边的elasticsearch.yml文件是配置文件，修改几个配置项：
++
+----
+cluster.name: elasticsearch  # 集群名字
+node.name: node  # 节点名字
+----
+这几项属于常规配置。下边的是xpack的设置
++
+----
+# 启用 ssl
+xpack.security.transport.ssl.enabled: true
+# 验证模式 证书验证
+xpack.security.transport.ssl.verification_mode: certificate
+# 客户端请求验证
+xpack.security.transport.ssl.client_authentication: required
+# 证书文件
+xpack.security.transport.ssl.keystore.path: elastic-certificates.p12
+xpack.security.transport.ssl.truststore.path: elastic-certificates.p12
+----
++
+配置证书文件，如果不想写路径，直接配置文件名，`elastic-certificates.p12` 就需要把证书文件丢到config文件夹里。
+完了，就启动服务就可以了。
+
+. 初始化账户
++
+用elasticsearch的bin目录有一个`elasticsearch-setup-passwords`工具，用来初始化账户密码
++
+----
+elasticsearch-setup-passwords interactive
+----
+执行后，就会对各个账号，进行初始化。输入配置的密码就可以配置。
+
+. kibana配置，除了正常的 `server.port`,`server.host`,`elasticsearch.hosts` 这三个配置，修改下边配置：
++
+----
+elasticsearch.username: "用户名"
+elasticsearch.password: "密码"
+----
++
+配置 `kibana_system` 就可以，但是要注意区分初始化不同账户的权限，都是有用的。
+
