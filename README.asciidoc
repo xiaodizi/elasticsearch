@@ -90,7 +90,9 @@ xref:CONTRIBUTING.md[CONTRIBUTING] 是关于如何打包的。
 
 [[目录]]
 == 目录
-xref:docs_cn/xpack-basic-security.asciidoc[xpack基本安全配置]
+. xref:docs_cn/xpack-basic-security.asciidoc[xpack基本安全配置]
+. xref:docs_cn/network.asciidoc[网络配置]
+
 
 先想想写啥.....
 
