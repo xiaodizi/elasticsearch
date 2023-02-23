@@ -13,6 +13,15 @@
 
 讨厌，这asciidoc的文档不会放图片，我的琢磨琢磨。
 
+目录下边讲的是如何进行Debug源码
+
+[[目录]]
+== 目录
+. xref:docs_cn/xpack-basic-security.asciidoc[xpack基本安全配置]
+. xref:docs_cn/network.asciidoc[网络配置]
+. xref:docs_cn/disjunction_max_query.asciidoc[Disjunction max query]
+. xref:docs_cn/inverted_index.asciidoc[倒排索引]
+
 
 [[开始]]
 == 开始
@@ -88,11 +97,6 @@ xref:TESTING.asciidoc[TESTING] 是关于Debug 测试的。
 
 xref:CONTRIBUTING.md[CONTRIBUTING] 是关于如何打包的。
 
-[[目录]]
-== 目录
-. xref:docs_cn/xpack-basic-security.asciidoc[xpack基本安全配置]
-. xref:docs_cn/network.asciidoc[网络配置]
-. xref:docs_cn/disjunction_max_query.asciidoc[Disjunction max query]
 
 
 先想想写啥.....
