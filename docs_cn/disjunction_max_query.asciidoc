@@ -1,0 +1,48 @@
+= Disjunction max query
+
+有一个或者多个查询条件。
+
+多个字句查询条件，dis_max 会给评分最高的查询条件，作为最终的评分。
+
+== tie_breaker：
+是个可选的参数，float类型的浮点数，必须在0 ~ 1.0 之间。增加子句查询的得分。
+
+=== dis_max 查询中怎么影响评分：
+
+. 从得分最高的子句条件中获取评分。
+. 讲过其他匹配的条件分数乘以tie_breaker。
+. 最高分加到想相乘的分数中。
+
+
+PS: 其实是有些像 `multi_match` 里的 `best_fields` 策略的。
+
+=== 测试数据
+----
+PUT test_index/_doc/1
+{
+  "title": "good day",
+  "content":"bad day"
+}
+PUT test_index/_doc/2
+{
+  "title": "sun day",
+  "content":"good day"
+}
+----
+
+=== 事例请求
+----
+GET test_index/_search
+{
+  "query": {
+    "dis_max": {
+      "queries": [
+        { "term": { "title": "good" } },
+        { "term": { "content": "good" } }
+      ],
+      "tie_breaker": 0.3
+    }
+  }
+}
+----
+
