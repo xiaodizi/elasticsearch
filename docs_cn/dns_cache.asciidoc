@@ -1,0 +1,148 @@
+= initSecurityProperties 方法
+
+Elasticsearch 启动会经过三个初始化准备阶段。
+
+initSecurityProperties 方法就是第一阶段的第一个方法。
+
+这里牵扯到一个东西，就是安全管理器。
+
+还有一个概念就是DNS Cache。
+
+方法很简单，先记录概念。
+
+=== 1.方法干了啥
+官方说的就是Elasticsearch 运行需要使用安全管理器进行运行。JVM 默认是缓存主机名 的解析10秒。
+
+而Elasticsearch 对这个配置进行了覆盖，修改成60秒，官方认为这个配置可以覆盖大多数的环境，反正我从没
+
+有纠结过这个问题。
+
+如果想修改这个值，可以在 JVM 参数里边配置 `es.networkaddress.cache.ttl` 和 `es.networkaddress.cache.negative.ttl`
+
+源码里，ES会从JVM 的配置里获取这两个配置的值，然后覆写到原始 jvm 的配置 `networkaddress.cache.negative.ttl` 和 `networkaddress.cache.ttl`
+
+官网还强调了一下，修改 JVM 这两个参数配置的时候，必须要修改 带 es 前缀的参数，修改官方的参数没用。
+
+看看源码，确实没用：
+
+----
+private static void initSecurityProperties() {
+        for (final String property : new String[] { "networkaddress.cache.ttl", "networkaddress.cache.negative.ttl" }) {
+            // 其实我看了一下也不算复写，是写了新的，加了es.这个前缀
+            final String overrideProperty = "es." + property;
+            // 感觉是 JDK 里边会有带es.前缀的配置，而且配置的是60S，这句就是把60S取出来了。断点看了一下确实是60S
+            final String overrideValue = System.getProperty(overrideProperty);
+            if (overrideValue != null) {
+                try {
+                    // 这里是覆盖了旧的 jdk 的 配置
+                    Security.setProperty(property, Integer.toString(Integer.valueOf(overrideValue)));
+                } catch (final NumberFormatException e) {
+                    throw new IllegalArgumentException("failed to parse [" + overrideProperty + "] with value [" + overrideValue + "]", e);
+                }
+            }
+        }
+
+        // 安全性中的策略文件代码库声明。策略依赖于属性扩展，请参阅PolicyUtil.readPolicy
+        Security.setProperty("policy.expandProperties", "true");
+    }
+----
+
+其实就是这个方法，获取配置带前缀的参数，方法取带前缀的，然后。方法给改成60秒。
+
+
+=== 2.什么是安全管理器
+看了一下官方推荐的jdk的文档，其实就是JDK 的安全管理策略，是基于文件。所以这两个配置要是修改，就是得这个文件。
+
+jdk 官方说的是默认情况下，策略文件是有两个，一个是系统范围的，一个是用户的，用户的是可选的。
+
+===== 默认存放路径：
+----
+java.home/lib/security/java.policy  (Solaris, Linux, or Mac OS X)
+java.home\lib\security\java.policy  (Windows)
+----
+
+我看了一下我电脑上的
+----
+MacBook-Pro in ~/Library/Java/JavaVirtualMachines/openjdk-17.0.2/Contents/Home/lib/security [10:55:06]
+$ ls
+blocked.certs          default.policy
+cacerts                public_suffix_list.dat
+----
+
+多了一层 security 文件夹。
+
+
+==== 也可以运行时配置：
+----
+java -Djava.security.manager -Djava.security.policy=someURL SomeApp
+----
+
+==== 配置内容
+. Keystore Entry 就是密钥的配置
++
+官网给了一个配置例子：
++
+----
+keystore "some_keystore_url", "keystore_type", "keystore_provider";
+keystorePasswordURL "some_password_url";
+----
+
+. Grant Entries 授权配置
++
+就不往细了写了，官方的配置例子
++
+----
+grant signedBy "signer_names", codeBase "URL",
+        principal principal_class_name "principal_name",
+        principal principal_class_name "principal_name",
+        ... {
+
+      permission permission_class_name "target_name", "action",
+          signedBy "signer_names";
+      permission permission_class_name "target_name", "action",
+          signedBy "signer_names";
+      ...
+  };
+----
+
+. The Permission Entries 权限配置
++
+例子：
++
+----
+grant {
+      permission Foo "foobar", signedBy "FooSoft";
+  };
+----
+
+
+=== Elasticsearch 怎么写入的配置呢？
+
+这就牵扯到cli工具了，cli-launcher是elasticsearch启动的一个工具。启动后有一个 `SystemJvmOptions` 的类，这个类里边牵扯了所有ES启动后的JVM相关的参数的配置。
+就是在这个类里systemJvmOptions方法加载的配置。
+
+内容好多，放一点吧：
+
+----
+
+    static List<String> systemJvmOptions() {
+        return List.of(
+            /*
+             * Cache ttl in seconds for positive DNS lookups noting that this overrides the JDK security property networkaddress.cache.ttl;
+             * can be set to -1 to cache forever.
+             */
+            "-Des.networkaddress.cache.ttl=60",
+            /*
+             * Cache ttl in seconds for negative DNS lookups noting that this overrides the JDK security property
+             * networkaddress.cache.negative ttl; set to -1 to cache forever.
+             */
+            "-Des.networkaddress.cache.negative.ttl=10",
+----
+
+
+
+
+
+
+
+

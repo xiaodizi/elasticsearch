@@ -416,7 +416,7 @@ class Elasticsearch {
             }
         }
 
-        // policy file codebase declarations in security.policy rely on property expansion, see PolicyUtil.readPolicy
+        // 安全性中的策略文件代码库声明。策略依赖于属性扩展，请参阅PolicyUtil.readPolicy
         Security.setProperty("policy.expandProperties", "true");
     }
 
