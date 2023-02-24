@@ -20,7 +20,9 @@
 . xref:docs_cn/xpack-basic-security.asciidoc[xpack基本安全配置]
 . xref:docs_cn/network.asciidoc[网络配置]
 . xref:docs_cn/disjunction_max_query.asciidoc[Disjunction max query]
-. xref:docs_cn/inverted_index.asciidoc[倒排索引]
+. 倒排索引
+. 源码第一个方法 `initSecurityProperties`
+. 最基本的 Rest Api 操作
 
 
 [[开始]]
