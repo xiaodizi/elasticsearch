@@ -50,7 +50,7 @@ public record ServerArgs(boolean daemonize, boolean quiet, Path pidFile, SecureS
     }
 
     /**
-     * Alternate constructor to read the args from a binary stream.
+     * 从二进制流中读取参数的可选构造函数
      */
     public ServerArgs(StreamInput in) throws IOException {
         this(
