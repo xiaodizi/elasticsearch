@@ -8,4 +8,4 @@ Elasticsearch有仅投票节点角色，为了避免脑裂问题，用几个节�
 下边是我考试的时候，准备的环境情况图，以及一些常见用虚拟机的问题，可以参考：
 
 
-image::../../../../Downloads/environment.png[]
+image::img/environment.png[]
