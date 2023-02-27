@@ -1,0 +1,28 @@
+= Elasticsearch 的一起基础RestAPI
+
+== Elasticsearch 介绍
+
+Elasticsearch是一个基于名为Lucene库的数据库服务器的搜索引擎工具。它提供数据分发、数据源多租户、具有HTTP Web界面的完全面向程序的文本搜索引擎。Elasticsearch是基于Java编程开发。它是一个分布式搜索引擎和分析引擎。Elastic 命令同时在多个服务器上运行，它是一个基于web的编程界面。
+
+=== 创建索引
+当用户将数据添加到哦Elasticsearch的时候，数据立即放入Lucene索引中。Elasticsearch在Lucene索引的基础上设计的，用于检索数据、传输和存储数据。Elasticsearch 有REST API ，因此用户可以使用POST和PUT 方法添加数据。PUT 方法用于已知数据ID的情况，POST是自动生成ID的情况。
+
+下面是一个添加document 的例子，并且已知document 的ID：
+----
+PUT customer_id/_docs/1
+{
+"name_of_the_customer": "Adam Smith"
+}
+----
+
+这个PUT 请求自动创建索引的名称，如果字段不存在，将会添加新的文档ID为1，并将所有信息存储在name_of_the_customer字段中。
+
+
+
+
+=== 获取document
+GET 命令可以获取指定ID的文档：
+*举例：
+GET /Customer_id/_docs/1*
+
+
