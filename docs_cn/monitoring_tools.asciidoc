@@ -54,7 +54,7 @@ image::img/elasticsearchhead.png[]
 http://mobz.github.io/elasticsearch-head/[官方网站]
 
 
-=== 使用 Kibana 进行 Elasticsearch 监控
+=== Elasticsearch 自身的监控功能
 
 Elasticsearch 是称为 Elastic Stack 的产品集合中的主要数据源组件。该堆栈中的每个组件负责监控自身并将结果报告给负责监控的 Elasticsearch 集群。建议在不同的集群中收集指标，尤其是当您在生产环境中运行 Elasticsearch 集群时。
 
