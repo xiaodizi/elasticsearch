@@ -1,0 +1,98 @@
+= Elasticsearch 集群监控工具
+
+国外有很多在做Elasticsearch集群监控方面的公司，我看也不少。
+但是开源的，很多已经停止更新了，我尝试了几款还能用的，给罗列在这里。
+好不好用自己感受吧！
+
+=== ElasticHQ / Elasticsearch HQ
+ElasticHQ是一个开源的 Elasticsearch 监控解决方案，由Elasticsearch in Action 的合著者 Roy Russo 发起。可以在Github下载，或作为Docker Hub 的Docker Image 下载。
+
+作者的书我没看，反正有点想买一本
+
+image::img/elasticsearchhq.png[]
+
+这东西整合很elasticsearch 的 health 和 cat API 。
+整体用着还行，还有一些集群系统的监控指标。
+
+http://docs.elastichq.org/installation.html#install-from-source[官网链接]
+https://github.com/ElasticHQ/elasticsearch-HQ[Github链接]
+
+目前还在更新，不过我比较推荐用Docker安装，省事。
+
+
+
+=== Elasticsearch Kopf 和 Cerebro
+
+Elasticsearch Kopf 比较可惜，目前已经不更新了，但是有些老鸟发帖子还觉得这东西还是不错的，我没尝试安装，最高的Elasticsearch版本才支持到2.X。
+
+https://github.com/lmenezes/elasticsearch-kopf[GitHub链接]
+
+Cerebro 支持 Elasticsearch 上的更高版本。可从其GitHub 存储库中获得。目前也需要Java 11以上运行了，
+
+目前还在更新.
+
+
+https://github.com/lmenezes/cerebro[Github链接]
+
+不过我尝试了一些最新版本，还是有些问题，我用的openjdk 17，没有运行起来。
+
+Issues 上很多人都是使用的docker安装，也需要修改一下JVM 的参数，后来我没再尝试了，不过推荐使用的人还是挺多的。
+
+
+
+=== ElasticSearch Head
+
+这个目前算是最实用的工具了吧！虽然不能算监控工具吧。目前 GitHub上可以获取 ，并定期维护和更新。该工具使用 Node.js 编写。
+
+安装方式比较多，我个人推荐使用Chrome扩展。
+
+
+这个项目有更多的更新和更多的社区参与。项目组织者还提供了一个基本网站 ，其中包含安装说明和各种屏幕截图。
+
+image::img/elasticsearchhead.png[]
+
+http://mobz.github.io/elasticsearch-head/[官方网站]
+
+
+=== 使用 Kibana 进行 Elasticsearch 监控
+
+Elasticsearch 是称为 Elastic Stack 的产品集合中的主要数据源组件。该堆栈中的每个组件负责监控自身并将结果报告给负责监控的 Elasticsearch 集群。建议在不同的集群中收集指标，尤其是当您在生产环境中运行 Elasticsearch 集群时。
+
+Elasticsearch 有一个全面的 API，您可以查询和接收有关集群、节点和任务的健康信息。您可以调用的端点以及示例查询和响应在 https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster.html[Elasticsearch Reference] 中有详细记录。
+
+image::img/json1.png[]
+
+还有 cat  API，它们提供类似的数据，但格式更加用户友好。 https://www.elastic.co/guide/en/elasticsearch/reference/6.6/cat.html[文档] 。
+
+image::img/json2.png
+
+再有一个就是X-Pack，看过尝试的一些人说，监控免费，有些功能还是收费的。
+
+8.0之后已经集成到Elasticsearch 里边了，不用再单独当成一个插件安装。
+
+默认是false的，可以开启
+
+----
+GET _cluster/settings
+
+PUT _cluster/settings
+{
+  "persistent": {
+    "xpack.monitoring.collection.enabled": false
+  }
+}
+----
+
+
+然后用beat采集，再单独发给一个独立开始监控的集群。
+
+具体可以参考这个 文档配置 https://www.elastic.co/guide/en/elasticsearch/reference/8.6/monitoring-production.html[传送门]
+
+
+=== Elasticsearch的监控指标
+
+我看了一家国外商用公司总结的一篇文章，我觉得总结还行吧！放在这有需要的可以看看，也许哪天没事我也整理一下，做个参考挺好。
+https://sematext.com/blog/top-10-elasticsearch-metrics-to-watch/[传送门]
+
+
+

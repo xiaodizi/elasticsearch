@@ -26,6 +26,7 @@
 . xref:docs_cn/rollover.asciidoc[大数据量索引处理(待完成)]
 . xref:docs_cn/elasticsearchcommond.asciidoc[基本的 Rest Api 操作(待完成)]
 . xref:docs_cn/environment.asciidoc[环境配置参考,以及搭建常见问题]
+. xref:docs_cn/monitoring_tools.asciidoc[集群监控工具]
 
 
 [[开始]]
