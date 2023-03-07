@@ -125,6 +125,7 @@ final class JvmOptionsParser {
         final Map<String, String> substitutions
     ) throws InterruptedException, IOException, JvmOptionsFileParserException, UserException {
 
+        //读取jvmOptions文件配置
         final List<String> jvmOptions = readJvmOptionsFiles(config);
 
         if (esJavaOpts != null) {
