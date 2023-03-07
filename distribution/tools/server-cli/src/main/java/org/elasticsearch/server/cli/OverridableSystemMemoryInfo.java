@@ -15,6 +15,7 @@ import java.util.Objects;
  * A {@link SystemMemoryInfo} which returns a user-overridden memory size if one
  * has been specified using the {@code es.total_memory_bytes} system property, or
  * else returns the value provided by a fallback provider.
+ * 一个 SystemMemoryInfo，如果已使用 es.total_memory_bytes 系统属性指定了用户重写的内存大小，则返回该内存大小，否则返回回退提供程序提供的值。
  */
 public final class OverridableSystemMemoryInfo implements SystemMemoryInfo {
 

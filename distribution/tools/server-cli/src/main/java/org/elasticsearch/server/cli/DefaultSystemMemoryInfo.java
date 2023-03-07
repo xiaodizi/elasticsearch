@@ -17,6 +17,7 @@ import java.util.function.LongSupplier;
 
 /**
  * A {@link SystemMemoryInfo} which delegates to {@link OperatingSystemMXBean}.
+ * 委托给 OperatingSystemMXBean 的 SystemMemoryInfo
  */
 public final class DefaultSystemMemoryInfo implements SystemMemoryInfo {
     private final LongSupplier totalMemory;
@@ -25,6 +26,10 @@ public final class DefaultSystemMemoryInfo implements SystemMemoryInfo {
         this.totalMemory = getOSBeanMemoryGetter();
     }
 
+    /**
+     * 查询系统内存大小
+     * @return
+     */
     @SuppressForbidden(reason = "Using com.sun internals is the only way to query total system memory")
     private static LongSupplier getOSBeanMemoryGetter() {
         OperatingSystemMXBean bean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
