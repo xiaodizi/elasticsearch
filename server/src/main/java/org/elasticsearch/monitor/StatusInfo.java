@@ -16,6 +16,7 @@ import java.io.IOException;
 
 /**
  * Class that represents the Health status for a node as determined by {@link NodeHealthService} and provides additional
+ * 类，表示由｛@link NodeHealthService｝确定的节点的运行状况，并提供其他
  * info explaining the reasons
  */
 public record StatusInfo(Status status, String info) implements Writeable {

@@ -35,14 +35,14 @@ public record ServerArgs(boolean daemonize, boolean quiet, Path pidFile, SecureS
         Writeable {
 
     /**
-     * Arguments for running Elasticsearch.
+     * 运行Elasticsearch的参数
      *
-     * @param daemonize {@code true} if Elasticsearch should run as a daemon process, or {@code false} otherwise
-     * @param quiet {@code false} if Elasticsearch should print log output to the console, {@code true} otherwise
-     * @param pidFile absolute path to a file Elasticsearch should write its process id to, or {@code null} if no pid file should be written
-     * @param secrets the provided secure settings implementation
-     * @param nodeSettings the node settings read from {@code elasticsearch.yml}, the cli and the process environment
-     * @param configDir the directory where {@code elasticsearch.yml} and other config exists
+     * @param daemonize {@code true} Elasticsearch是否作为守护进程运行
+     * @param quiet {@code false} 是否在控制台打印输出日志
+     * @param pidFile pid文件的绝对路径，写入进城id
+     * @param secrets 安全设置
+     * @param nodeSettings 从elasticsearch.yml、cli和进程环境中读取的节点设置
+     * @param configDir elasticsearch.yml和其他配置所在的目录
      */
     public ServerArgs {
         assert pidFile == null || pidFile.isAbsolute();

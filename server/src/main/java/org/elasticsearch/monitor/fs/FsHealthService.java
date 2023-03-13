@@ -41,6 +41,7 @@ import static org.elasticsearch.monitor.StatusInfo.Status.UNHEALTHY;
 
 /**
  * Runs periodically and attempts to create a temp file to see if the filesystem is writable. If not then it marks the path as unhealthy.
+ * 定期运行并尝试创建临时文件，以查看文件系统是否可写。如果没有，则将路径标记为不健康。
  */
 public class FsHealthService extends AbstractLifecycleComponent implements NodeHealthService {
 

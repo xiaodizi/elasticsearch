@@ -303,6 +303,7 @@ public class Coordinator extends AbstractLifecycleComponent implements ClusterSt
 
     /**
      * This method returns an object containing information about why cluster formation failed, which can be useful in troubleshooting.
+     * 此方法返回一个对象，该对象包含有关群集形成失败原因的信息，这在故障排除中很有用。
      * @return Information about why cluster formation failed
      */
     public ClusterFormationState getClusterFormationState() {
@@ -945,6 +946,7 @@ public class Coordinator extends AbstractLifecycleComponent implements ClusterSt
     }
 
     // package-visible for testing
+    // 测试可见的包装
     long getCurrentTerm() {
         synchronized (mutex) {
             return coordinationState.get().getCurrentTerm();

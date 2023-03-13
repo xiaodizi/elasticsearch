@@ -326,6 +326,7 @@ public class Node implements Closeable {
 
     /**
      * Constructs a node
+     * 构造节点
      *
      * @param initialEnvironment         the initial environment for this node, which will be added to by plugins
      * @param pluginServiceCtor          a function that takes a {@link Settings} object and returns a {@link PluginsService}

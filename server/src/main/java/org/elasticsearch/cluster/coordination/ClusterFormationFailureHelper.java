@@ -126,6 +126,7 @@ public class ClusterFormationFailureHelper {
 
     /**
      * If this node believes that cluster formation has failed, this record provides information that can be used to determine why that is.
+     * 如果该节点认为集群形成失败，则该记录提供了可用于确定原因的信息。
      */
     public record ClusterFormationState(
         List<String> initialMasterNodesSetting,
@@ -222,7 +223,9 @@ public class ClusterFormationFailureHelper {
 
         /**
          * This method provides a human-readable String describing why cluster formation failed.
+         * 此方法提供了一个人类可读的字符串，描述了集群形成失败的原因。
          * @return A human-readable String describing why cluster formation failed
+         * 描述群集形成失败原因的可读字符串
          */
         public String getDescription() {
             return getCoordinatorDescription() + getJoinStatusDescription();

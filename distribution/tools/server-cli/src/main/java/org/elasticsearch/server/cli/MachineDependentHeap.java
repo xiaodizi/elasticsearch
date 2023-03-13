@@ -140,16 +140,14 @@ public final class MachineDependentHeap {
          * Machine learning only node.
          * 机器学习节点
          *
-         * <p>Heap is computed as:
-         * 堆计算如下
-         * <ul>
-         *     <li>40% of total system memory when total system memory 16 gigabytes or less.</li>
+         * Heap is computed as:
+         * 堆计算如下:
+         *     40% of total system memory when total system memory 16 gigabytes or less.
          *     当总系统内存为16G或更少时，占总系统内存的40%。
-         *     <li>40% of the first 16 gigabytes plus 10% of memory above that when total system memory is more than 16 gigabytes.</li>
+         *     40% of the first 16 gigabytes plus 10% of memory above that when total system memory is more than 16 gigabytes.
          *     前16G的40%加上总系统内存超过16G时的10%。
-         *     <li>The absolute maximum heap size is 31 gigabytes.</li>
+         *     The absolute maximum heap size is 31 gigabytes.
          *     最大堆大小为31 GB。
-         * </ul>
          *
          * In all cases the result is rounded down to the next whole multiple of 4 megabytes.
          * The reason for doing this is that Java will round requested heap sizes to a multiple
@@ -172,14 +170,12 @@ public final class MachineDependentHeap {
          * Data node. Essentially any node that isn't a master or ML only node.
          * 数据节点。任何不是主节点或仅ML节点的节点。
          *
-         * <p>Heap is computed as:
+         * Heap is computed as:
          * 堆计算如下：
-         * <ul>
-         *     <li>40% of total system memory when less than 1 gigabyte with a minimum of 128 megabytes.</li>
+         *     40% of total system memory when less than 1 gigabyte with a minimum of 128 megabytes.
          *     当小于1G并且最小内存为128M时，占总系统内存的40%。
-         *     <li>50% of total system memory when greater than 1 gigabyte up to a maximum of 31 gigabytes.</li>
+         *     50% of total system memory when greater than 1 gigabyte up to a maximum of 31 gigabytes.
          *     当大于1G时，占总系统内存的50%，最高可达31千兆字节。
-         * </ul>
          */
         DATA(m -> mb(m < GB ? max((long) (m * .4), MIN_HEAP_SIZE) : min((long) (m * .5), MAX_HEAP_SIZE))),
 
@@ -187,7 +183,7 @@ public final class MachineDependentHeap {
          * Unknown role node.
          * 未知角色节点
          *
-         * <p>Hard-code heap to a default of 1 gigabyte.
+         * Hard-code heap to a default of 1 gigabyte.
          * 硬代码堆默认为1GB
          */
         UNKNOWN(m -> DEFAULT_HEAP_SIZE_MB);

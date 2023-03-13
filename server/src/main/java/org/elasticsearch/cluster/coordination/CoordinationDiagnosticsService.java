@@ -383,6 +383,7 @@ public class CoordinationDiagnosticsService implements ClusterStateListener {
                 verbose
             );
         } else { // none is elected master and we are master eligible
+            // 没有人被选为大师，我们有资格成为大师
             result = diagnoseOnHaveNotSeenMasterRecentlyAndWeAreMasterEligible(
                 localMasterHistory,
                 masterEligibleNodes,
@@ -398,6 +399,7 @@ public class CoordinationDiagnosticsService implements ClusterStateListener {
     /**
      * This method handles the case when we have not had an elected master node recently, and we are on a node that is not
      * master-eligible. In this case we reach out to some master-eligible node in order to see what it knows about master stability.
+     * 当我们最近没有选定的主节点，并且我们所在的节点不符合主资格时，该方法会处理这种情况。在这种情况下，我们联系到某个主节点，以了解它对主稳定性的了解。
      * @param localMasterHistory The master history, as seen from this node
      * @param coordinator The Coordinator for this node
      * @param nodeHasMasterLookupTimeframe The value of health.master_history.has_master_lookup_timeframe
@@ -484,6 +486,7 @@ public class CoordinationDiagnosticsService implements ClusterStateListener {
      * This method handles the case when we have not had an elected master node recently, and we are on a master-eligible node. In this
      * case we look at the cluster formation information from all master-eligible nodes, trying to understand if we have a discovery
      * problem, a problem forming a quorum, or something else.
+     * 当我们最近没有选定的主节点，并且我们所在的节点不符合主资格时，该方法会处理这种情况。在这种情况下，我们联系到某个主节点，以了解它对主稳定性的了解。
      * @param localMasterHistory The master history, as seen from this node
      * @param masterEligibleNodes The known master eligible nodes in the cluster
      * @param coordinator The Coordinator for this node
@@ -506,6 +509,7 @@ public class CoordinationDiagnosticsService implements ClusterStateListener {
         /*
          * We want to make sure that the same elements are in this set every time we loop through it. We don't care if values are added
          * while we're copying it, which is why this is not synchronized. We only care that once we have a copy it is not changed.
+         * 我们希望确保每次循环该集合时，该集合中都有相同的元素。我们不在乎在复制该集合时是否添加了值，这就是为什么不同步的原因。我们只关心一旦我们有了副本，它就不会被更改。
          */
         final Map<DiscoveryNode, ClusterFormationStateOrException> nodeToClusterFormationResponses = clusterFormationResponses == null
             ? Map.of()
@@ -812,6 +816,8 @@ public class CoordinationDiagnosticsService implements ClusterStateListener {
         /*
          * Assignment of clusterFormationInfoTasks must be done before the call to beginPollingClusterFormationInfo because it is used
          * asynchronously by rescheduleClusterFormationFetchConsumer, called from beginPollingClusterFormationInfo.
+         * clusterFormationInfoTasks的分配必须在调用
+         * beginPollingClusterFormationInfo之前完成，因为它由从beginPolingClusterFormationInformation调用的scheduleClusterFormationFetchConsumer异步使用。
          */
         clusterFormationInfoTasks = cancellables;
         clusterFormationResponses = responses;
@@ -822,6 +828,7 @@ public class CoordinationDiagnosticsService implements ClusterStateListener {
      * This method returns quickly, but in the background schedules to query the remote node's cluster formation state in 10 seconds, and
      * repeats doing that until cancel() is called on all of the Cancellable that this method inserts into cancellables. This method
      * exists (rather than being just part of the beginPollingClusterFormationInfo() above) in order to facilitate unit testing.
+     * 该方法快速返回，但在后台计划在10秒内查询远程节点的集群形成状态，并重复执行该操作，直到对该方法插入到可取消对象中的所有可取消对象调用cancel（）。该方法存在（而不仅仅是上面beginPollingClusterFormationInfo（）的一部分），以便于单元测试。
      * @param nodeResponseConsumer A consumer for any results produced for a node by this method
      * @param cancellables The Map of Cancellables, one for each node being polled
      */
@@ -1170,6 +1177,7 @@ public class CoordinationDiagnosticsService implements ClusterStateListener {
     }
 
     // Non-private for testing
+    // 非专用测试
     record ClusterFormationStateOrException(
         ClusterFormationFailureHelper.ClusterFormationState clusterFormationState,
         Exception exception

@@ -15,6 +15,7 @@ import org.elasticsearch.env.Environment;
 
 /**
  * Utilities for use during bootstrap. This is public so that tests may use these methods.
+ * 引导期间使用的实用程序。这是公开的，以便测试可以使用这些方法。
  */
 public class BootstrapUtil {
 

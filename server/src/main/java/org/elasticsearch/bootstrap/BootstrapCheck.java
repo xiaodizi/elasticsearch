@@ -12,11 +12,13 @@ import java.util.Objects;
 
 /**
  * Encapsulates a bootstrap check.
+ * 封装引导检查。
  */
 public interface BootstrapCheck {
 
     /**
      * Encapsulate the result of a bootstrap check.
+     * 封装引导检查的结果。
      */
     record BootstrapCheckResult(String message) {
 
@@ -49,6 +51,7 @@ public interface BootstrapCheck {
 
     /**
      * Test if the node fails the check.
+     * 测试节点是否未通过检查。
      *
      * @param context the bootstrap context
      * @return the result of the bootstrap check

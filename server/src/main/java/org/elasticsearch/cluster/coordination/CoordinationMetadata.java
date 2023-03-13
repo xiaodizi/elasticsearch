@@ -322,6 +322,7 @@ public class CoordinationMetadata implements Writeable, ToXContentFragment {
 
     /**
      * A collection of persistent node ids, denoting the voting configuration for cluster state changes.
+     * 持久节点ID的集合，表示集群状态更改的投票配置。
      */
     public static class VotingConfiguration implements Writeable, ToXContentFragment {
 

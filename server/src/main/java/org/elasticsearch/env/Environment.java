@@ -86,7 +86,7 @@ public class Environment {
         this(settings, configPath, PathUtils.get(System.getProperty("java.io.tmpdir")));
     }
 
-    // Should only be called directly by this class's unit tests
+    // 只能由此类的单元测试直接调用
     Environment(final Settings settings, final Path configPath, final Path tmpPath) {
         final Path homeFile;
         if (PATH_HOME_SETTING.exists(settings)) {

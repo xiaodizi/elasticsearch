@@ -118,11 +118,11 @@ class Elasticsearch {
 
             BootstrapInfo.init();
 
-            // note that reading server args does *not* close System.in, as it will be read from later for shutdown notification
+            // 请注意，读取服务器参数不会关闭System.in，因为稍后将从中读取该参数以发出关闭通知
             var in = new InputStreamStreamInput(System.in);
             args = new ServerArgs(in);
 
-            // mostly just paths are used in phase 1, so secure settings are not needed
+            // 环境变量配置
             Environment nodeEnv = new Environment(args.nodeSettings(), args.configDir());
 
             BootstrapInfo.setConsole(ConsoleLoader.loadConsole(nodeEnv));

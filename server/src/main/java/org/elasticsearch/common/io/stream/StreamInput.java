@@ -735,8 +735,8 @@ public abstract class StreamInput extends InputStream {
     }
 
     /**
-     * Reads a value of unspecified type. If a collection is read then the collection will be mutable if it contains any entry but might
-     * be immutable if it is empty.
+     * 读取未指定类型的值。如果一个集合被读取，那么如果它包含任何条目，那么该集合将是可变的
+     * 如果为空，则为不可变。
      */
     @Nullable
     public Object readGenericValue() throws IOException {
