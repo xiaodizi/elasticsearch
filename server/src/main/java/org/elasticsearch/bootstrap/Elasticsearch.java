@@ -129,6 +129,7 @@ class Elasticsearch {
 
             // DO NOT MOVE THIS
             // Logging must remain the last step of phase 1. Anything init steps needing logging should be in phase 2.
+            // 记录必须仍然是阶段1的最后一步。任何需要日志记录的初始化步骤都应该在第2阶段。
             LogConfigurator.setNodeName(Node.NODE_NAME_SETTING.get(args.nodeSettings()));
             LogConfigurator.configure(nodeEnv, args.quiet() == false);
         } catch (Throwable t) {
@@ -143,9 +144,10 @@ class Elasticsearch {
     }
 
     /**
-     * Second phase of process initialization.
+     * 进程初始化的第二阶段。
      *
-     * <p> Phase 2 consists of everything that must occur up to and including security manager initialization.
+     * Phase 2 consists of everything that must occur up to and including security manager initialization.
+     * 阶段2包括安全管理器初始化之前必须发生的所有事情。
      */
     private static void initPhase2(Bootstrap bootstrap) throws IOException {
         final ServerArgs args = bootstrap.args();
@@ -200,17 +202,22 @@ class Elasticsearch {
 
     /**
      * Third phase of initialization.
+     * 初始化的第三阶段。
      *
-     * <p> Phase 3 consists of everything after security manager is initialized. Up until now, the system has been single
+     * Phase 3 consists of everything after security manager is initialized. Up until now, the system has been single
      * threaded. This phase can spawn threads, write to the log, and is subject ot the security manager policy.
+     * 阶段3包括初始化安全管理器后的所有内容。到目前为止，该系统一直是单线程的。此阶段可以生成线程，写入日志，并受安全管理器策略的约束。
      *
-     * <p> At the end of phase 3 the system is ready to accept requests and the main thread is ready to terminate. This means:
-     * <ul>
-     *     <li>The node components have been constructed and started</li>
-     *     <li>Cleanup has been done (eg secure settings are closed)</li>
-     *     <li>At least one thread other than the main thread is alive and will stay alive after the main thread terminates</li>
-     *     <li>The parent CLI process has been notified the system is ready</li>
-     * </ul>
+     * At the end of phase 3 the system is ready to accept requests and the main thread is ready to terminate. This means:
+     * 在阶段3结束时，系统准备好接受请求，主线程准备好终止。这意味着：
+     *     The node components have been constructed and started
+     *     节点组件已构建并启动
+     *     Cleanup has been done (eg secure settings are closed)
+     *     已完成清理（如安全设置已关闭）
+     *     At least one thread other than the main thread is alive and will stay alive after the main thread terminates
+     *     除主线程外，至少有一个线程处于活动状态，并且在主线程终止后将保持活动状态
+     *     The parent CLI process has been notified the system is ready
+     *     已通知父CLI进程系统已就绪
      *
      * @param bootstrap the bootstrap state
      * @throws IOException if a problem with filesystem or network occurs
@@ -229,11 +236,13 @@ class Elasticsearch {
                 BootstrapChecks.check(context, boundTransportAddress, checks);
             }
         };
+        // new 一个elasticsearch节点实例
         INSTANCE = new Elasticsearch(bootstrap.spawner(), node);
 
         // any secure settings must be read during node construction
         IOUtils.close(bootstrap.secureSettings());
 
+        // 启动 实例
         INSTANCE.start();
 
         if (bootstrap.args().daemonize()) {

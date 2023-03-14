@@ -317,8 +317,10 @@ public class Node implements Closeable {
 
     /**
      * Constructs a node
+     * 构造节点
      *
      * @param environment         the initial environment for this node, which will be added to by plugins
+     *                            节点初始化，并添加插件
      */
     public Node(Environment environment) {
         this(environment, PluginsService.getPluginsServiceCtor(environment), true);
