@@ -20,7 +20,7 @@
 现在的需求就是 在 elassandra 基础上做新的需求。
 目前在做的事，就是升级里边的elasticsearch 和 cassandra 。
 
-https://github.com/xiaodizi/elassandra [elassandra链接]
+https://github.com/xiaodizi/elassandra[我的elassandra链接]
 
 其他的需求目前没听说，反正还是要写文档，要记录。坚持！！！
 
