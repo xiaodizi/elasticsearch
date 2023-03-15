@@ -12,15 +12,13 @@
 邮箱：305297641@qq.com
 
 == 最近的情况
-最近找了个工作，薪资不美丽，基本是以前的月薪的七折了，但是现在年龄也大了，最后在家人的劝说下，还是入职了。
 
-这边的源码，我还在译，文章还会写，本来想整理源码的图的，目前看得等等了。
+目前接了点事情做，还是做elasticsearch的二次开发。
 
-现在的工作内容是做elasticsearch的二次开发。
+现在的需求就是 在 elassandra 基础上做新的需求。
+目前在做的事，就是升级里边的elasticsearch 和 cassandra 。
 
-目前接到的需求就是 在 elassandra 基础上做新的需求。目前老板给的需求就是升级里边的elasticsearch 和 cassandra 。目前在做。
-
-准备那边也更新些内容，有需要的朋友可以自取。https://github.com/xiaodizi/elassandra [elassandra链接]
+https://github.com/xiaodizi/elassandra [elassandra链接]
 
 
 == 目录下边讲的是如何进行Debug源码
