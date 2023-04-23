@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * The result of parsing a document.
+ * 分析文档的结果。
  */
 public class ParsedDocument {
 

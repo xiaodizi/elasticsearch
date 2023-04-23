@@ -21,6 +21,7 @@ import java.util.Objects;
 
 /**
  * Allows for shard level components to be injected with the shard id.
+ * 允许使用碎片id注入碎片级组件。
  */
 public class ShardId implements Comparable<ShardId>, ToXContentFragment, Writeable {
 

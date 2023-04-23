@@ -24,6 +24,7 @@ import java.util.Objects;
 
 /**
  * A value class representing the basic required properties of an Elasticsearch index.
+ * 表示Elasticsearch索引的基本必需财产的值类。
  */
 public class Index implements Writeable, ToXContentObject {
 

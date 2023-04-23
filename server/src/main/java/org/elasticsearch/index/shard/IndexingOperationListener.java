@@ -14,11 +14,13 @@ import java.util.List;
 
 /**
  * An indexing listener for indexing, delete, events.
+ * 用于索引、删除、事件的索引侦听器。
  */
 public interface IndexingOperationListener {
 
     /**
      * Called before the indexing occurs.
+     * 在索引发生之前调用
      */
     default Engine.Index preIndex(ShardId shardId, Engine.Index operation) {
         return operation;
@@ -29,6 +31,7 @@ public interface IndexingOperationListener {
      * also called when indexing a document did not succeed due to document
      * related failures. See {@link #postIndex(ShardId, Engine.Index, Exception)}
      * for engine level failures
+     * 在索引操作发生后调用。请注意，当由于文档相关故障而导致文档索引未成功时，也会调用此方法。请参阅｛@link-postIndex（ShardId，Engine.Index，Exception）｝了解引擎级故障
      */
     default void postIndex(ShardId shardId, Engine.Index index, Engine.IndexResult result) {}
 
@@ -36,11 +39,13 @@ public interface IndexingOperationListener {
      * Called after the indexing operation occurred with engine level exception.
      * See {@link #postIndex(ShardId, Engine.Index, Engine.IndexResult)} for document
      * related failures
+     * 在索引操作发生后调用，但出现引擎级异常。请参阅｛@link postIndex（ShardId、Engine.Index、Engine.IIndexResult）｝了解与文档相关的故障
      */
     default void postIndex(ShardId shardId, Engine.Index index, Exception ex) {}
 
     /**
      * Called before the delete occurs.
+     * 在删除发生之前调用。
      */
     default Engine.Delete preDelete(ShardId shardId, Engine.Delete delete) {
         return delete;
@@ -63,6 +68,7 @@ public interface IndexingOperationListener {
 
     /**
      * A Composite listener that multiplexes calls to each of the listeners methods.
+     * 一个复合侦听器，用于多路复用对每个侦听器方法的调用。
      */
     final class CompositeListener implements IndexingOperationListener {
         private final List<IndexingOperationListener> listeners;

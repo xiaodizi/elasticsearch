@@ -174,6 +174,7 @@ public interface BytesReference extends Comparable<BytesReference>, ToXContentFr
 
     /**
      * Interprets the referenced bytes as UTF8 bytes, returning the resulting string
+     * 将引用的字节解释为UTF8字节，返回结果字符串
      */
     String utf8ToString();
 
