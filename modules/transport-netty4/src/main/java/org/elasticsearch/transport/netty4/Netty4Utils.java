@@ -116,4 +116,8 @@ public class Netty4Utils {
             return BytesReference.fromByteBuffers(byteBuffers);
         }
     }
+
+    public static void setup() {
+
+    }
 }

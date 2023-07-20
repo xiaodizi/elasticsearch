@@ -278,8 +278,22 @@ public class Netty4HttpServerTransport extends AbstractHttpServerTransport {
         return new HttpChannelHandler(this, handlingSettings);
     }
 
-    static final AttributeKey<Netty4HttpChannel> HTTP_CHANNEL_KEY = AttributeKey.newInstance("es-http-channel");
-    static final AttributeKey<Netty4HttpServerChannel> HTTP_SERVER_CHANNEL_KEY = AttributeKey.newInstance("es-http-server-channel");
+//    static final AttributeKey<Netty4HttpChannel> HTTP_CHANNEL_KEY = AttributeKey.newInstance("es-http-channel");
+//    static final AttributeKey<Netty4HttpServerChannel> HTTP_SERVER_CHANNEL_KEY = AttributeKey.newInstance("es-http-server-channel");
+
+    static final AttributeKey<Netty4HttpChannel> HTTP_CHANNEL_KEY;
+    static final AttributeKey<Netty4HttpServerChannel> HTTP_SERVER_CHANNEL_KEY;
+
+
+    static {
+        HTTP_CHANNEL_KEY = AttributeKey.valueOf("es-http-channel") == null ?
+            AttributeKey.newInstance("es-http-channel") :
+            AttributeKey.valueOf("es-http-channel");
+
+        HTTP_SERVER_CHANNEL_KEY = AttributeKey.valueOf("es-http-server-channel") == null ?
+            AttributeKey.newInstance("es-http-server-channel") :
+            AttributeKey.valueOf("es-http-server-channel");
+    }
 
     protected static class HttpChannelHandler extends ChannelInitializer<Channel> {
 

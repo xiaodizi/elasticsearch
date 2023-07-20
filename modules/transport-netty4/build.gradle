@@ -41,13 +41,13 @@ esplugin {
 
 dependencies {
   // network stack
-  api "io.netty:netty-buffer:${versions.netty}"
+  /* api "io.netty:netty-buffer:${versions.netty}"
   api "io.netty:netty-codec:${versions.netty}"
   api "io.netty:netty-codec-http:${versions.netty}"
   api "io.netty:netty-common:${versions.netty}"
   api "io.netty:netty-handler:${versions.netty}"
   api "io.netty:netty-resolver:${versions.netty}"
-  api "io.netty:netty-transport:${versions.netty}"
+  api "io.netty:netty-transport:${versions.netty}" */
 }
 
 restResources {
@@ -93,11 +93,11 @@ TaskProvider<Test> pooledInternalClusterTest = tasks.register("pooledInternalClu
 }
 
 RestIntegTestTask pooledJavaRestTest = tasks.create("pooledJavaRestTest", RestIntegTestTask) {
-    systemProperty 'es.set.netty.runtime.available.processors', 'false'
-    SourceSetContainer sourceSets = project.getExtensions().getByType(SourceSetContainer.class);
-    SourceSet javaRestTestSourceSet = sourceSets.getByName(JavaRestTestPlugin.SOURCE_SET_NAME)
-    setTestClassesDirs(javaRestTestSourceSet.getOutput().getClassesDirs())
-    setClasspath(javaRestTestSourceSet.getRuntimeClasspath())
+  systemProperty 'es.set.netty.runtime.available.processors', 'false'
+  SourceSetContainer sourceSets = project.getExtensions().getByType(SourceSetContainer.class);
+  SourceSet javaRestTestSourceSet = sourceSets.getByName(JavaRestTestPlugin.SOURCE_SET_NAME)
+  setTestClassesDirs(javaRestTestSourceSet.getOutput().getClassesDirs())
+  setClasspath(javaRestTestSourceSet.getRuntimeClasspath())
 }
 testClusters.pooledJavaRestTest {
   systemProperty 'es.use_unpooled_allocator', 'false'

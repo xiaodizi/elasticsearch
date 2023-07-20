@@ -14,7 +14,7 @@ dependencies {
     // this is provided by the runtime classpath, from the security project
     exclude group: 'com.google.guava', module: 'guava'
   }
-  testRuntimeOnly 'com.google.guava:guava:19.0'
+  testRuntimeOnly 'com.google.guava:guava:31.1-jre'
   testImplementation project(":test:framework")
   testImplementation project(path: xpackModule('core'), configuration: 'testArtifacts')
 }

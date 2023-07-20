@@ -46,7 +46,7 @@ dependencies {
   api "org.apache.httpcomponents:httpasyncclient:${versions.httpasyncclient}"
   api "org.apache.httpcomponents:httpcore-nio:${versions.httpcore}"
   api "org.apache.httpcomponents:httpclient-cache:${versions.httpclient}"
-  runtimeOnly 'com.google.guava:guava:19.0'
+  runtimeOnly 'com.google.guava:guava:31.1-jre'
 
   testImplementation 'org.elasticsearch:securemock:1.2'
   testImplementation "org.elasticsearch:mocksocket:${versions.mocksocket}"

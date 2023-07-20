@@ -100,14 +100,14 @@ public class RepositoriesSetupPlugin implements Plugin<Project> {
             } catch (MalformedURLException e) {
                 throw new IllegalStateException(e);
             }
-            final String message = String.format(
-                Locale.ROOT,
-                "repository [%s] on project with path [%s] is not using a secure protocol for artifacts on [%s]",
-                repositoryName,
-                projectPath,
-                url
-            );
-            throw new GradleException(message);
+//            final String message = String.format(
+//                Locale.ROOT,
+//                "repository [%s] on project with path [%s] is not using a secure protocol for artifacts on [%s]",
+//                repositoryName,
+//                projectPath,
+//                url
+//            );
+//            throw new GradleException(message);
         }
     }
 

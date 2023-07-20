@@ -31,13 +31,13 @@ dependencies {
   api project(':libs:elasticsearch-nio')
 
   // network stack
-  api "io.netty:netty-buffer:${versions.netty}"
+ /* api "io.netty:netty-buffer:${versions.netty}"
   api "io.netty:netty-codec:${versions.netty}"
   api "io.netty:netty-codec-http:${versions.netty}"
   api "io.netty:netty-common:${versions.netty}"
   api "io.netty:netty-handler:${versions.netty}"
   api "io.netty:netty-resolver:${versions.netty}"
-  api "io.netty:netty-transport:${versions.netty}"
+  api "io.netty:netty-transport:${versions.netty}" */
 }
 
 tasks.named("dependencyLicenses").configure {

@@ -58,7 +58,7 @@ dependencies {
   api 'io.opencensus:opencensus-api:0.18.0'
   api 'io.opencensus:opencensus-contrib-http-util:0.18.0'
   api 'com.google.apis:google-api-services-storage:v1-rev20200814-1.30.10'
-  runtimeOnly 'com.google.guava:guava:26.0-jre'
+  runtimeOnly 'com.google.guava:guava:31.1-jre'
 
   // HACK: javax.xml.bind was removed from default modules in java 9, so we pull the api in here,
   // and whitelist this hack in JarHell

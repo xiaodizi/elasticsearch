@@ -52,19 +52,20 @@ class Elasticsearch extends EnvironmentAwareCommand {
 
     // visible for testing
     Elasticsearch() {
-        super("Starts Elasticsearch", () -> {}); // we configure logging later so we override the base class from configuring logging
+        super("Starts Elasticsearch", () -> {
+        }); // we configure logging later so we override the base class from configuring logging
         versionOption = parser.acceptsAll(Arrays.asList("V", "version"),
             "Prints Elasticsearch version information and exits");
         daemonizeOption = parser.acceptsAll(Arrays.asList("d", "daemonize"),
-            "Starts Elasticsearch in the background")
+                "Starts Elasticsearch in the background")
             .availableUnless(versionOption);
         pidfileOption = parser.acceptsAll(Arrays.asList("p", "pidfile"),
-            "Creates a pid file in the specified path on start")
+                "Creates a pid file in the specified path on start")
             .availableUnless(versionOption)
             .withRequiredArg()
             .withValuesConvertedBy(new PathConverter());
         quietOption = parser.acceptsAll(Arrays.asList("q", "quiet"),
-            "Turns off standard output/error streams logging in console")
+                "Turns off standard output/error streams logging in console")
             .availableUnless(versionOption)
             .availableUnless(daemonizeOption);
     }
@@ -73,6 +74,7 @@ class Elasticsearch extends EnvironmentAwareCommand {
      * Main entry point for starting elasticsearch
      */
     public static void main(final String[] args) throws Exception {
+
         overrideDnsCachePolicyProperties();
         /*
          * We want the JVM to think there is a security manager installed so that if internal policy decisions that would be based on the
@@ -104,10 +106,23 @@ class Elasticsearch extends EnvironmentAwareCommand {
             }
             exit(status);
         }
+//        System.out.println("开始开启Cassandra............");
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Cassandra cassandra = new Cassandra();
+//                    cassandra.active();
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
     }
 
     private static void overrideDnsCachePolicyProperties() {
-        for (final String property : new String[] {"networkaddress.cache.ttl", "networkaddress.cache.negative.ttl" }) {
+        for (final String property : new String[]{"networkaddress.cache.ttl", "networkaddress.cache.negative.ttl"}) {
             final String overrideProperty = "es." + property;
             final String overrideValue = System.getProperty(overrideProperty);
             if (overrideValue != null) {
@@ -116,7 +131,7 @@ class Elasticsearch extends EnvironmentAwareCommand {
                     Security.setProperty(property, Integer.toString(Integer.valueOf(overrideValue)));
                 } catch (final NumberFormatException e) {
                     throw new IllegalArgumentException(
-                            "failed to parse [" + overrideProperty + "] with value [" + overrideValue + "]", e);
+                        "failed to parse [" + overrideProperty + "] with value [" + overrideValue + "]", e);
                 }
             }
         }
@@ -178,9 +193,9 @@ class Elasticsearch extends EnvironmentAwareCommand {
     /**
      * Required method that's called by Apache Commons procrun when
      * running as a service on Windows, when the service is stopped.
-     *
+     * <p>
      * http://commons.apache.org/proper/commons-daemon/procrun.html
-     *
+     * <p>
      * NOTE: If this method is renamed and/or moved, make sure to
      * update elasticsearch-service.bat!
      */
