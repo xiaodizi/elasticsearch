@@ -80,6 +80,7 @@ dependencies {
   api project(':libs:elasticsearch-secure-sm')
   api project(':libs:elasticsearch-x-content')
   api project(":libs:elasticsearch-geo")
+  api project(":client:rest")
 
   compileOnly project(':libs:elasticsearch-plugin-classloader')
   testRuntimeOnly project(':libs:elasticsearch-plugin-classloader')
@@ -106,6 +107,7 @@ dependencies {
   runtimeOnly 'javax.inject:javax.inject:1'
   runtimeOnly 'com.clearspring.analytics:stream:2.5.2'
   runtimeOnly 'com.github.ben-manes.caffeine:caffeine:2.9.2'
+
 
   // 官网cassandra-all
 //  compile('org.apache.cassandra:cassandra-all:4.1.1') {

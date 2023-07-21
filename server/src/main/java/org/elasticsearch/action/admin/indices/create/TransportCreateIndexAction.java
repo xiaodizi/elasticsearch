@@ -87,4 +87,9 @@ public class TransportCreateIndexAction extends TransportMasterNodeAction<Create
             new CreateIndexResponse(response.isAcknowledged(), response.isShardsAcknowledged(), indexName)));
     }
 
+    public void createIndex(final CreateIndexRequest request, final ClusterState state,
+                            final ActionListener<CreateIndexResponse> listener){
+        masterOperation(request,state,listener);
+    }
+
 }

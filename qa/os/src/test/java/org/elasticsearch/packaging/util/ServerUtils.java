@@ -60,8 +60,8 @@ public class ServerUtils {
 
     private static final Logger logger = LogManager.getLogger(ServerUtils.class);
 
-    private static String SECURITY_ENABLED = "xpack.security.enabled: true";
-    private static String SSL_ENABLED = "xpack.security.http.ssl.enabled: true";
+    private static String SECURITY_ENABLED = "xpack.security.enabled: false";
+    private static String SSL_ENABLED = "xpack.security.http.ssl.enabled: false";
 
     // generous timeout as nested virtualization can be quite slow ...
     private static final long waitTime = TimeUnit.MINUTES.toMillis(3);
