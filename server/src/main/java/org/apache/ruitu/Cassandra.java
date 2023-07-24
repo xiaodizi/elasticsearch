@@ -27,15 +27,15 @@ public class Cassandra {
     }
 
     public static void active() {
+
         System.setProperty("log4j2.debug", "true");
-        String cassandraHome = System.getProperty("user.dir");
-        System.setProperty("cassandra.config", "file:///Users/lei.fu/java/mca/gradle_demo/gradle_demo/src/main/resources/cassandra.yaml");
+        String cassandraHome = System.getProperty("es.path.home");
+        String cassandraConfig=System.getProperty("es.path.conf");
+        System.setProperty("cassandra.config", "file://"+cassandraConfig+"/cassandra.yaml");
         System.setProperty("cassandra.storagedir", "/Users/lei.fu/data");
         System.setProperty("cassandra.home",cassandraHome);
+        System.setProperty("cassandra.logdir",System.getProperty("es.logs.base_path"));
 
-        /**
-         * 拉起cassandra
-         */
         try {
             org.apache.cassandra.service.CassandraDaemon daemon = new org.apache.cassandra.service.CassandraDaemon();
             daemon.activate();

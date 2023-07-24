@@ -23,6 +23,7 @@ import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 import joptsimple.OptionSpecBuilder;
 import joptsimple.util.PathConverter;
+import org.apache.ruitu.Cassandra;
 import org.elasticsearch.Build;
 import org.elasticsearch.cli.EnvironmentAwareCommand;
 import org.elasticsearch.cli.ExitCodes;
@@ -75,6 +76,9 @@ public class Elasticsearch extends EnvironmentAwareCommand {
      */
     public static void main(final String[] args) throws Exception {
 
+        System.setProperty("io.netty.noUnsafe", "false");
+
+
         overrideDnsCachePolicyProperties();
         /*
          * We want the JVM to think there is a security manager installed so that if internal policy decisions that would be based on the
@@ -106,19 +110,10 @@ public class Elasticsearch extends EnvironmentAwareCommand {
             }
             exit(status);
         }
-//        System.out.println("开始开启Cassandra............");
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    Cassandra cassandra = new Cassandra();
-//                    cassandra.active();
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
+
+        System.out.println("args:"+System.getProperty("path.data"));
+
+        Cassandra.active();
     }
 
     private static void overrideDnsCachePolicyProperties() {

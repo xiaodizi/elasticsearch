@@ -27,6 +27,7 @@ import org.apache.logging.log4j.core.appender.ConsoleAppender;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.lucene.util.Constants;
 import org.apache.lucene.util.StringHelper;
+import org.apache.ruitu.Cassandra;
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.Version;
 import org.elasticsearch.cli.KeyStoreAwareCommand;
@@ -316,6 +317,8 @@ final class Bootstrap {
     private void start() throws NodeValidationException {
         node.start();
         keepAliveThread.start();
+
+
     }
 
     static void stop() throws IOException {

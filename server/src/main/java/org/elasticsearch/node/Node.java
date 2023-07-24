@@ -23,6 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.util.Constants;
 import org.apache.lucene.util.SetOnce;
+import org.apache.ruitu.Cassandra;
 import org.elasticsearch.Assertions;
 import org.elasticsearch.Build;
 import org.elasticsearch.ElasticsearchException;
@@ -302,8 +303,19 @@ public class Node implements Closeable {
         final List<Closeable> resourcesToClose = new ArrayList<>(); // register everything we need to release in the case of an error
         boolean success = false;
         try {
-            Settings tmpSettings = Settings.builder().put(initialEnvironment.settings())
+
+
+            String cassandraYaml = initialEnvironment.configFile().toString()+"/cassandra.yaml";
+
+            SnitchProperties snitchProperties=new SnitchProperties(initialEnvironment);
+
+            Settings newSettings = NodeSetting.nodeSettings(initialEnvironment.dataFiles()[0].toString(),
+                initialEnvironment.settings(),
+                cassandraYaml,snitchProperties);
+
+            Settings tmpSettings = Settings.builder().put(newSettings)
                 .put(Client.CLIENT_TYPE_SETTING_S.getKey(), CLIENT_TYPE).build();
+
 
             final JvmInfo jvmInfo = JvmInfo.jvmInfo();
             logger.info(
@@ -358,7 +370,7 @@ public class Node implements Closeable {
              * values, no matter they ask for them from.
              */
             this.environment = new Environment(settings, initialEnvironment.configFile(), Node.NODE_LOCAL_STORAGE_SETTING.get(settings));
-            Environment.assertEquivalent(initialEnvironment, this.environment);
+          //  Environment.assertEquivalent(initialEnvironment, this.environment);
             nodeEnvironment = new NodeEnvironment(tmpSettings, environment);
             logger.info("node name [{}], node ID [{}], cluster name [{}], roles {}",
                 NODE_NAME_SETTING.get(tmpSettings), nodeEnvironment.nodeId(), ClusterName.CLUSTER_NAME_SETTING.get(tmpSettings).value(),
@@ -900,6 +912,9 @@ public class Node implements Closeable {
         logger.info("started");
 
         pluginsService.filterPlugins(ClusterPlugin.class).forEach(ClusterPlugin::onNodeStarted);
+
+
+
 
         return this;
     }
