@@ -63,9 +63,12 @@ public class NodeSetting {
     }
 
     public static Settings nodeSettings(String dataPath, Settings settings, String path, SnitchProperties snitchProperties) {
+        System.setProperty("es.data.path",dataPath);
         if (getSeedsConfig(path).equals("127.0.0.1") || getSeedsConfig(path).equals("localhost")) {
             return Settings.builder()
                 .put("network.host", getCassandraYamlByKey("rpc_address", path))
+                .put("http.port",9200)
+                .put("transport.port",9300)
                 .put("node.name", getCassandraYamlByKey("rpc_address", path))
                 //.put("discovery.seed_hosts", getSeedsConfig(path))
                 .put("cluster.name", getCassandraYamlByKey("cluster_name", path))
@@ -76,6 +79,8 @@ public class NodeSetting {
         }
         return Settings.builder()
             .put("network.host", getCassandraYamlByKey("rpc_address", path))
+            .put("http.port",9200)
+            .put("transport.port",9300)
             .put("node.name", getCassandraYamlByKey("rpc_address", path))
             .put("discovery.seed_hosts", getSeedsConfig(path))
             .put("cluster.initial_cluster_manager_nodes",getSeedsConfig(path))

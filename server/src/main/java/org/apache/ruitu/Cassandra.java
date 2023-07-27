@@ -32,7 +32,7 @@ public class Cassandra {
         String cassandraHome = System.getProperty("es.path.home");
         String cassandraConfig=System.getProperty("es.path.conf");
         System.setProperty("cassandra.config", "file://"+cassandraConfig+"/cassandra.yaml");
-        System.setProperty("cassandra.storagedir", "/Users/lei.fu/data");
+        System.setProperty("cassandra.storagedir", System.getProperty("es.data.path"));
         System.setProperty("cassandra.home",cassandraHome);
         System.setProperty("cassandra.logdir",System.getProperty("es.logs.base_path"));
 
