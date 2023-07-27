@@ -67,7 +67,6 @@ public class Utils {
             String filedKeyName = row.column().name.toString();
             if (options.get(filedKeyName) != null) {
                 String filedType = row.column().type.asCQL3Type().toString();
-                logger.info("[toMaps] 尝试转码的字段:" + filedKeyName + "; 字段类型:" + filedType);
                 switch (filedType) {
                     case "float":
                         ByteBuffer buffer1 = row.buffer();

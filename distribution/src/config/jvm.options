@@ -54,8 +54,18 @@
 # 10:-XX:-UseConcMarkSweepGC
 # 10:-XX:-UseCMSInitiatingOccupancyOnly
 11-:-XX:+UseG1GC
-11-:-XX:G1ReservePercent=25
-11-:-XX:InitiatingHeapOccupancyPercent=30
+# 11-:-XX:G1ReservePercent=25
+# 11-:-XX:InitiatingHeapOccupancyPercent=30
+
+# full gc效率更高
+11-:-XX:+ExplicitGCInvokesConcurrent
+11-:-XX:+UseGCOverheadLimit
+# # # 启动并发GC周期时的堆内存占用百分比.
+11-:-XX:InitiatingHeapOccupancyPercent=25
+# G1为分配担保预留的空间比例 默认10%
+11-:-XX:G1ReservePercent=15
+# 表示每次GC最大的停顿毫秒数，默认200，减少该值会增加系统load。
+11-:-XX:MaxGCPauseMillis=100
 
 
 

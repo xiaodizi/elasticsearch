@@ -44,7 +44,6 @@ public class EsIndexer extends NoOpIndexer {
 
     private LinkedBlockingQueue<Row> rowLinkedBlockingQueue = new LinkedBlockingQueue<>();
 
-    ExecutorService executorService = Executors.newFixedThreadPool(1);
 
     public EsIndexer(ElasticSecondaryIndex index, DecoratedKey key, int nowInSec, boolean withDelete) {
         this.key = key;
@@ -74,7 +73,11 @@ public class EsIndexer extends NoOpIndexer {
     @Override
     public void updateRow(Row oldRowData, Row newRowData) {
         final Stopwatch time = Stopwatch.createStarted();
-        index.index(key, newRowData, oldRowData, nowInSec);
+        try{
+            rowLinkedBlockingQueue.put(newRowData);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         logger.debug("{} updateRow "+id+" took {}ms", index.index_name, time.elapsed(TimeUnit.MILLISECONDS));
     }
 
@@ -87,12 +90,7 @@ public class EsIndexer extends NoOpIndexer {
 
     @Override
     public void finish() {
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                commit();
-            }
-        });
+        commit();
     }
 
     @Override
@@ -100,6 +98,7 @@ public class EsIndexer extends NoOpIndexer {
         // 最后统一提交写入
         while (!rowLinkedBlockingQueue.isEmpty()) {
             index.index(this.key, rowLinkedBlockingQueue.poll(), null, nowInSec);
+            rowLinkedBlockingQueue.remove(rowLinkedBlockingQueue.poll());
         }
     }
 }

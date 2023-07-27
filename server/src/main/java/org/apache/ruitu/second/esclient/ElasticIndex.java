@@ -7,7 +7,6 @@ import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
-import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
@@ -16,10 +15,7 @@ import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.nio.conn.ssl.SSLIOSessionStrategy;
 import org.apache.http.ssl.SSLContexts;
-import org.apache.http.util.EntityUtils;
 import org.elasticsearch.Version;
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
-import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.client.*;
 import org.elasticsearch.cluster.ClusterModule;
 import org.elasticsearch.common.Strings;
@@ -103,24 +99,28 @@ public class ElasticIndex {
         nodeVersions = new TreeSet<>();
         logger.info("initializing REST clients against {}", clusterHosts);
         try {
-            client = buildClient(restClientSettings(), clusterHosts.toArray(new HttpHost[clusterHosts.size()]));
-            Map<?, ?> response = entityAsMap(client.performRequest(new Request("GET", "_nodes/plugins")));
-            Map<?, ?> nodes = (Map<?, ?>) response.get("nodes");
-            for (Map.Entry<?, ?> node : nodes.entrySet()) {
-                Map<?, ?> nodeInfo = (Map<?, ?>) node.getValue();
-                nodeVersions.add(Version.fromString(nodeInfo.get("version").toString()));
-                for (Object module : (List<?>) nodeInfo.get("modules")) {
-                    Map<?, ?> moduleInfo = (Map<?, ?>) module;
-                    if (moduleInfo.get("name").toString().startsWith("x-pack-")) {
-                        hasXPack = true;
+            if (client == null) {
+                synchronized (ElasticIndex.class) {
+                    if (client == null) {
+                        client = buildClient(restClientSettings(), clusterHosts.toArray(new HttpHost[clusterHosts.size()]));
+                        Map<?, ?> response = entityAsMap(client.performRequest(new Request("GET", "_nodes/plugins")));
+                        Map<?, ?> nodes = (Map<?, ?>) response.get("nodes");
+                        for (Map.Entry<?, ?> node : nodes.entrySet()) {
+                            Map<?, ?> nodeInfo = (Map<?, ?>) node.getValue();
+                            nodeVersions.add(Version.fromString(nodeInfo.get("version").toString()));
+                            for (Object module : (List<?>) nodeInfo.get("modules")) {
+                                Map<?, ?> moduleInfo = (Map<?, ?>) module;
+                                if (moduleInfo.get("name").toString().startsWith("x-pack-")) {
+                                    hasXPack = true;
+                                }
+                            }
+                        }
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public Boolean newIndex(String indexName, Settings setting, Map<String, Map<String, String>> fields) {
@@ -425,13 +425,24 @@ public class ElasticIndex {
     private static Boolean addIndexData(String index, String json, String id) throws IOException {
         Request request = new Request("PUT", "/" + index + "/_doc/" + id);
         request.setJsonEntity(json);
-        Response response = client().performRequest(request);
-        Map<String, Object> map = entityAsMap(response);
-        String result = map.get("result").toString();
-        if (result.equals("updated") || result.equals("created")) {
-            return true;
-        }
-        return false;
+        client.performRequestAsync(request, new ResponseListener() {
+            @Override
+            public void onSuccess(Response response) {
+                logger.debug("Insert data "+index+" res:"+response);
+            }
+
+            @Override
+            public void onFailure(Exception exception) {
+                logger.error("Insert data "+index+" Exception:",exception);
+            }
+        });
+//        Map<String, Object> map = entityAsMap(response);
+//        String result = map.get("result").toString();
+//        if (result.equals("updated") || result.equals("created")) {
+//            return true;
+//        }
+//        return false;
+        return true;
     }
 
 

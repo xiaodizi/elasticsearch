@@ -135,6 +135,7 @@ public class ElasticSecondaryIndex implements Index, INotificationConsumer {
             settingsBuilder.put("number_of_shards", elasticIndex.getClusterHealth());
             settingsBuilder.put("number_of_replicas", (elasticIndex.getClusterHealth() - 1));
             settingsBuilder.put("refresh_interval", refreshSecond + "s");
+//            settingsBuilder.put("indices.breaker.total.use_real_memory","true");
             elasticIndex.newIndex(this.index_name, settingsBuilder.build(), filedes);
         }
     }
