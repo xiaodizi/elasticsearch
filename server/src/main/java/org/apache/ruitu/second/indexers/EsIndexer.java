@@ -98,7 +98,6 @@ public class EsIndexer extends NoOpIndexer {
         // 最后统一提交写入
         while (!rowLinkedBlockingQueue.isEmpty()) {
             index.index(this.key, rowLinkedBlockingQueue.poll(), null, nowInSec);
-            rowLinkedBlockingQueue.remove(rowLinkedBlockingQueue.poll());
         }
     }
 }
