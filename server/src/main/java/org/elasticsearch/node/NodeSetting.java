@@ -22,11 +22,6 @@ import java.util.Map;
 public class NodeSetting {
 
 
-    /**
-     * 获取seeds 配置 转换 opensearch 配置
-     * @param filePath  配置问价路径
-     * @return 转换好的 opensearch 配置
-     */
     private static String getSeedsConfig(String filePath) {
         InputStream inputStream = null;
         try {
@@ -42,6 +37,25 @@ public class NodeSetting {
         for (int i = 0; i < split.length; i++) {
             String substring = split[i].substring(0, split[i].indexOf(":"));
             ipArr[i]=substring;
+        }
+        return JSON.toJSONString(ipArr).replace("[","").replace("]","").replace("\"","").trim();
+    }
+
+    private static String getSeedsConfigPort(String filePath) {
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(new File(filePath));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Yaml yaml = new Yaml();
+        Map<String, List<Map<String, List<Map<String, Object>>>>> data = yaml.load(inputStream);
+        String seedProvider = data.get("seed_provider").get(0).get("parameters").get(0).get("seeds").toString();
+        String[] split = seedProvider.split(",");
+        String[] ipArr=new String[split.length];
+        for (int i = 0; i < split.length; i++) {
+            String substring = split[i].substring(0, split[i].indexOf(":"));
+            ipArr[i]=substring+":9300";
         }
         return JSON.toJSONString(ipArr).replace("[","").replace("]","").replace("\"","").trim();
     }
@@ -63,6 +77,7 @@ public class NodeSetting {
     }
 
     public static Settings nodeSettings(String dataPath, Settings settings, String path, SnitchProperties snitchProperties) {
+
         System.setProperty("es.data.path",dataPath);
         if (getSeedsConfig(path).equals("127.0.0.1") || getSeedsConfig(path).equals("localhost")) {
             return Settings.builder()
@@ -70,7 +85,6 @@ public class NodeSetting {
                 .put("http.port",9200)
                 .put("transport.port",9300)
                 .put("node.name", getCassandraYamlByKey("rpc_address", path))
-                //.put("discovery.seed_hosts", getSeedsConfig(path))
                 .put("cluster.name", getCassandraYamlByKey("cluster_name", path))
                 .put("path.home", settings.get("path.home"))
                 .put("path.data", dataPath+"/search")
@@ -82,8 +96,8 @@ public class NodeSetting {
             .put("http.port",9200)
             .put("transport.port",9300)
             .put("node.name", getCassandraYamlByKey("rpc_address", path))
-            .put("discovery.seed_hosts", getSeedsConfig(path))
-            .put("cluster.initial_cluster_manager_nodes",getSeedsConfig(path))
+            .put("discovery.seed_hosts", getSeedsConfigPort(path))
+            .put("cluster.initial_master_nodes",getSeedsConfig(path))
             .put("cluster.name", getCassandraYamlByKey("cluster_name", path))
             .put("path.home", settings.get("path.home"))
             .put("path.data", dataPath+"/search")
