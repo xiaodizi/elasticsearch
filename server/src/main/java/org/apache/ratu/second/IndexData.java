@@ -16,16 +16,35 @@
  * limitations under the License.
  */
 
-package org.apache.rutu.second.esclient;
+package org.apache.ratu.second;
 
-import javax.annotation.Nonnull;
-import java.util.List;
+public class IndexData {
+    private String firstName;
+    private String lastName;
 
-public class SearchResult {
+    public IndexData(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
-    public final List<SearchResultRow> items;
+    public String getFirstName() {
+        return firstName;
+    }
 
-    public SearchResult(@Nonnull List<SearchResultRow> items) {
-        this.items = items;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("IndexData{first name='%s', last name='%s'}", firstName, lastName);
     }
 }

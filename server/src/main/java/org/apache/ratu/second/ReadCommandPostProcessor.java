@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.apache.rutu.second;
+package org.apache.ratu.second;
 
 import org.apache.cassandra.db.ColumnFamilyStore;
 import org.apache.cassandra.db.ReadCommand;

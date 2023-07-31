@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.rutu.second;
+package org.apache.ratu.second;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.google.common.base.Stopwatch;
@@ -36,12 +36,12 @@ import org.apache.cassandra.notifications.INotificationConsumer;
 import org.apache.cassandra.schema.ColumnMetadata;
 import org.apache.cassandra.schema.IndexMetadata;
 import org.apache.cassandra.schema.TableMetadata;
-import org.apache.rutu.second.esclient.ElasticIndex;
-import org.apache.rutu.second.esclient.EsPartitionIterator;
-import org.apache.rutu.second.esclient.SearchResult;
-import org.apache.rutu.second.esclient.SearchResultRow;
-import org.apache.rutu.second.indexers.EsIndexer;
-import org.apache.rutu.second.indexers.NoOpPartitionIterator;
+import org.apache.ratu.second.esclient.ElasticIndex;
+import org.apache.ratu.second.esclient.EsPartitionIterator;
+import org.apache.ratu.second.esclient.SearchResult;
+import org.apache.ratu.second.esclient.SearchResultRow;
+import org.apache.ratu.second.indexers.EsIndexer;
+import org.apache.ratu.second.indexers.NoOpPartitionIterator;
 import org.elasticsearch.common.settings.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-package org.apache.rutu.second.indexers;
+package org.apache.ratu.second.indexers;
 
 import com.google.common.base.Stopwatch;
 import org.apache.cassandra.db.DecoratedKey;
 import org.apache.cassandra.db.DeletionTime;
 import org.apache.cassandra.db.rows.Row;
 import org.apache.cassandra.utils.ByteBufferUtil;
-import org.apache.rutu.second.ElasticSecondaryIndex;
+import org.apache.ratu.second.ElasticSecondaryIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

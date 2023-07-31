@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.rutu.second.reset;
+package org.apache.ratu.second.reset;
 
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.common.bytes.BytesArray;

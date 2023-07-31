@@ -16,48 +16,32 @@
  * limitations under the License.
  */
 
-package org.apache.rutu.second.indexers;
+package org.apache.ratu.second;
 
-import org.apache.cassandra.db.DeletionTime;
-import org.apache.cassandra.db.RangeTombstone;
-import org.apache.cassandra.db.rows.Row;
-import org.apache.cassandra.index.Index;
+import org.apache.cassandra.db.partitions.PartitionIterator;
+import org.apache.cassandra.db.rows.RowIterator;
 
-public class NoOpIndexer implements Index.Indexer {
+public class EsPartitionIterator implements PartitionIterator {
+
+    private final EsRowIterator rowIterator;
+
+    public EsPartitionIterator(EsRowIterator rowIterator){
+        this.rowIterator=rowIterator;
+    }
     @Override
-    public void begin() {
-
+    public void close() {
+        rowIterator.forEachRemaining(row -> {
+            this.close();
+        });
     }
 
     @Override
-    public void partitionDelete(DeletionTime deletionTime) {
-
+    public boolean hasNext() {
+        return rowIterator.hasNext();
     }
 
     @Override
-    public void rangeTombstone(RangeTombstone tombstone) {
-
-    }
-
-    @Override
-    public void insertRow(Row row) {
-    }
-
-    @Override
-    public void updateRow(Row oldRowData, Row newRowData) {
-
-    }
-
-    @Override
-    public void removeRow(Row row) {
-    }
-
-    @Override
-    public void finish() {
-
-    }
-
-    protected void commit() {
-
+    public RowIterator next() {
+        return rowIterator;
     }
 }

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.apache.rutu.second.esclient;
+package org.apache.ratu.second.esclient;
 
 import com.alibaba.fastjson2.JSONObject;
 import org.apache.cassandra.db.*;
@@ -34,7 +34,7 @@ import org.apache.cassandra.schema.TableMetadata;
 import org.apache.cassandra.service.StorageProxy;
 import org.apache.cassandra.tracing.Tracing;
 import org.apache.cassandra.utils.ByteBufferUtil;
-import org.apache.rutu.second.ElasticSecondaryIndex;
+import org.apache.ratu.second.ElasticSecondaryIndex;
 
 import java.nio.ByteBuffer;
 import java.util.Iterator;

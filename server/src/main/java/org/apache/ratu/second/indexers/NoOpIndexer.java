@@ -16,12 +16,48 @@
  * limitations under the License.
  */
 
-package org.apache.rutu.second;
+package org.apache.ratu.second.indexers;
 
-import org.apache.cassandra.db.ReadCommand;
-import org.apache.cassandra.db.partitions.PartitionIterator;
+import org.apache.cassandra.db.DeletionTime;
+import org.apache.cassandra.db.RangeTombstone;
+import org.apache.cassandra.db.rows.Row;
+import org.apache.cassandra.index.Index;
 
-import java.util.function.BiFunction;
+public class NoOpIndexer implements Index.Indexer {
+    @Override
+    public void begin() {
 
-public abstract class IndexPostProcessor implements BiFunction<PartitionIterator, ReadCommand, PartitionIterator> {
+    }
+
+    @Override
+    public void partitionDelete(DeletionTime deletionTime) {
+
+    }
+
+    @Override
+    public void rangeTombstone(RangeTombstone tombstone) {
+
+    }
+
+    @Override
+    public void insertRow(Row row) {
+    }
+
+    @Override
+    public void updateRow(Row oldRowData, Row newRowData) {
+
+    }
+
+    @Override
+    public void removeRow(Row row) {
+    }
+
+    @Override
+    public void finish() {
+
+    }
+
+    protected void commit() {
+
+    }
 }

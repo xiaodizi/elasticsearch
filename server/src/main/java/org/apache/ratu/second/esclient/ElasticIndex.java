@@ -1,4 +1,4 @@
-package org.apache.rutu.second.esclient;
+package org.apache.ratu.second.esclient;
 
 
 import com.alibaba.fastjson2.JSON;

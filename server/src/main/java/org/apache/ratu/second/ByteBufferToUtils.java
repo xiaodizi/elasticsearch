@@ -16,35 +16,18 @@
  * limitations under the License.
  */
 
-package org.apache.rutu.second;
+package org.apache.ratu.second;
 
-public class IndexData {
-    private String firstName;
-    private String lastName;
+import org.apache.cassandra.utils.ByteBufferUtil;
 
-    public IndexData(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+import java.nio.ByteBuffer;
+import java.nio.charset.CharacterCodingException;
+
+public class ByteBufferToUtils {
+
+
+    public static String asciiToText(ByteBuffer buffer) throws CharacterCodingException {
+        return ByteBufferUtil.string(buffer);
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("IndexData{first name='%s', last name='%s'}", firstName, lastName);
-    }
 }

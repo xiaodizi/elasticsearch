@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.apache.rutu.second;
+package org.apache.ratu.second;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;

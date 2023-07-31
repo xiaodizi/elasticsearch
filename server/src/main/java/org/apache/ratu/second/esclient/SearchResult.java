@@ -16,18 +16,16 @@
  * limitations under the License.
  */
 
-package org.apache.rutu.second;
+package org.apache.ratu.second.esclient;
 
-import org.apache.cassandra.utils.ByteBufferUtil;
+import javax.annotation.Nonnull;
+import java.util.List;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.CharacterCodingException;
+public class SearchResult {
 
-public class ByteBufferToUtils {
+    public final List<SearchResultRow> items;
 
-
-    public static String asciiToText(ByteBuffer buffer) throws CharacterCodingException {
-        return ByteBufferUtil.string(buffer);
+    public SearchResult(@Nonnull List<SearchResultRow> items) {
+        this.items = items;
     }
-
 }

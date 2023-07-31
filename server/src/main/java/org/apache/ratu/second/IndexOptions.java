@@ -16,20 +16,19 @@
  * limitations under the License.
  */
 
-package org.apache.rutu.second.indexers;
+package org.apache.ratu.second;
 
-import org.apache.cassandra.db.ReadCommand;
-import org.apache.cassandra.db.partitions.PartitionIterator;
+import org.apache.cassandra.schema.IndexMetadata;
+import org.apache.cassandra.schema.TableMetadata;
 
-import java.util.function.BiFunction;
-
-public class NoOpPartitionIterator implements BiFunction<PartitionIterator, ReadCommand, PartitionIterator> {
-
-    public static final NoOpPartitionIterator INSTANCE=new NoOpPartitionIterator();
+public class IndexOptions {
 
 
-    @Override
-    public PartitionIterator apply(PartitionIterator partitionIterator, ReadCommand command) {
-        return partitionIterator;
+    final TableMetadata tableMetadata;
+    final IndexMetadata indexMetadata;
+
+    public IndexOptions(TableMetadata tableMetadata, IndexMetadata indexMetadata){
+        this.tableMetadata = tableMetadata;
+        this.indexMetadata = indexMetadata;
     }
 }

@@ -16,32 +16,26 @@
  * limitations under the License.
  */
 
-package org.apache.rutu.second;
+package org.apache.ratu.second.esclient;
 
-import org.apache.cassandra.db.partitions.PartitionIterator;
-import org.apache.cassandra.db.rows.RowIterator;
+import com.alibaba.fastjson2.JSONObject;
 
-public class EsPartitionIterator implements PartitionIterator {
+import javax.annotation.Nonnull;
+import java.nio.ByteBuffer;
 
-    private final EsRowIterator rowIterator;
+public class SearchResultRow {
 
-    public EsPartitionIterator(EsRowIterator rowIterator){
-        this.rowIterator=rowIterator;
-    }
-    @Override
-    public void close() {
-        rowIterator.forEachRemaining(row -> {
-            this.close();
-        });
-    }
+    public final String[] primaryKey;
 
-    @Override
-    public boolean hasNext() {
-        return rowIterator.hasNext();
+    public final JSONObject docMetadata;
+
+    public ByteBuffer partitionKey;
+
+    public String[] clusteringKeys;
+
+    public SearchResultRow(@Nonnull String[] primaryKey,@Nonnull JSONObject docMetadata){
+        this.primaryKey=primaryKey;
+        this.docMetadata=docMetadata;
     }
 
-    @Override
-    public RowIterator next() {
-        return rowIterator;
-    }
 }

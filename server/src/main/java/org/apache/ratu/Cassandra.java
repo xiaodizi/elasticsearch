@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package org.apache.rutu;
+package org.apache.ratu;
 
 
 public class Cassandra {

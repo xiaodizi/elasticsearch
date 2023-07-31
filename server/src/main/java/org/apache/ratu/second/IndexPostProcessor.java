@@ -16,26 +16,12 @@
  * limitations under the License.
  */
 
-package org.apache.rutu.second.esclient;
+package org.apache.ratu.second;
 
-import com.alibaba.fastjson2.JSONObject;
+import org.apache.cassandra.db.ReadCommand;
+import org.apache.cassandra.db.partitions.PartitionIterator;
 
-import javax.annotation.Nonnull;
-import java.nio.ByteBuffer;
+import java.util.function.BiFunction;
 
-public class SearchResultRow {
-
-    public final String[] primaryKey;
-
-    public final JSONObject docMetadata;
-
-    public ByteBuffer partitionKey;
-
-    public String[] clusteringKeys;
-
-    public SearchResultRow(@Nonnull String[] primaryKey,@Nonnull JSONObject docMetadata){
-        this.primaryKey=primaryKey;
-        this.docMetadata=docMetadata;
-    }
-
+public abstract class IndexPostProcessor implements BiFunction<PartitionIterator, ReadCommand, PartitionIterator> {
 }
