@@ -509,6 +509,28 @@ configure(subprojects.findAll { ['archives', 'packages'].contains(it.name) }) {
         }
       }
     }
+
+
+    cassandraSigarFiles = {
+      return copySpec {
+        with copySpec {
+          from '../../server/lib/sigar-bin/'
+          into 'lib/'
+          eachFile { it.setMode(0755) }
+        }
+      }
+    }
+
+    javaSecrityPolicy = {
+      return copySpec {
+        with copySpec {
+          from '../../server/src/main/resources/org/elasticsearch/bootstrap/security.policy'
+          into 'config/'
+          eachFile { it.setMode(0755) }
+        }
+      }
+    }
+
   }
 }
 

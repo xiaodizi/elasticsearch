@@ -69,6 +69,10 @@ CopySpec archiveFiles(CopySpec modulesFiles, String distributionType, String pla
       into('modules') {
         with modulesFiles
       }
+
+      with cassandraSigarFiles()
+
+      with javaSecrityPolicy()
     }
   }
 }

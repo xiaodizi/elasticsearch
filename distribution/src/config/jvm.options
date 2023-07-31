@@ -33,9 +33,9 @@
 ################################################################
 
 ## GC configuration
-8-13:-XX:+UseConcMarkSweepGC
-8-13:-XX:CMSInitiatingOccupancyFraction=75
-8-13:-XX:+UseCMSInitiatingOccupancyOnly
+# 8-13:-XX:+UseConcMarkSweepGC
+# 8-13:-XX:CMSInitiatingOccupancyFraction=75
+# 8-13:-XX:+UseCMSInitiatingOccupancyOnly
 
 ## G1GC Configuration
 # NOTE: G1 GC is only supported on JDK version 10 or later
@@ -88,10 +88,6 @@
 
 ## JVM temporary directory
 -Djava.io.tmpdir=${ES_TMPDIR}
-
-
-
-
 
 ## heap dumps
 

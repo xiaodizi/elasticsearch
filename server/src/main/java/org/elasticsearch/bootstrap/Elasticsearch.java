@@ -23,7 +23,7 @@ import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 import joptsimple.OptionSpecBuilder;
 import joptsimple.util.PathConverter;
-import org.apache.ruitu.Cassandra;
+import org.apache.rutu.Cassandra;
 import org.elasticsearch.Build;
 import org.elasticsearch.cli.EnvironmentAwareCommand;
 import org.elasticsearch.cli.ExitCodes;
@@ -76,7 +76,11 @@ public class Elasticsearch extends EnvironmentAwareCommand {
      */
     public static void main(final String[] args) throws Exception {
 
+        System.setProperty("es.bundled_jdk","false");
+
         System.setProperty("io.netty.noUnsafe", "false");
+
+        System.setProperty("java.security.policy",System.getProperty("es.path.conf")+"/security.policy");
 
 
         overrideDnsCachePolicyProperties();
